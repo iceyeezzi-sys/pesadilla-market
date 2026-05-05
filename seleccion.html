@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es" class="bg-black">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PESADILLA – ELIGE TU CAMINO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root { 
+      --p-red: #ff0000; 
+      --p-red-dark: #8B0000;
+      --p-white: #E8D8D8; 
+      --bg-dark: #050505;
+      --p-glow: 0 0 15px rgba(255, 0, 0, 0.6);
+    }
+    
+    * { cursor: none; }
+
+    /* SMOOTH SCROLL LENIS */
+    html.lenis { height: auto; }
+    .lenis-smooth { scroll-behavior: auto !important; }
+    .lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis-stopped { overflow: hidden; }
+    .lenis-scrolling iframe { pointer-events: none; }
+
+    body, html { 
+      background: transparent !important; 
+      color: var(--p-white); 
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-family: 'Syne', sans-serif;
+    }
+
+    /* TEXTURES & OVERLAYS */
+    .grain {
+      position: fixed;
+      inset: -50%;
+      z-index: 50;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PScwIDAgMjAwIDIwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nMC42NScgbnVtT2N0YXZlcz0nMycgc3RpdGNoVGlsZXM9J3N0aXRjaCcvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbHRlcj0ndXJsKCNuKScvPjwvc3ZnPg==');
+      opacity: 0.05;
+      pointer-events: none;
+      animation: noise 0.2s infinite;
+    }
+    @keyframes noise {
+      0% { transform: translate(0,0) }
+      10% { transform: translate(-5%,-5%) }
+      20% { transform: translate(-10%,5%) }
+      30% { transform: translate(5%,-10%) }
+      40% { transform: translate(-5%,15%) }
+      50% { transform: translate(-10%,5%) }
+      60% { transform: translate(15%,0) }
+      70% { transform: translate(0,10%) }
+      80% { transform: translate(-15%,0) }
+      90% { transform: translate(10%,5%) }
+      100% { transform: translate(5%,0) }
+    }
+
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 51%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      opacity: 0.1;
+    }
+
+
+    /* LAYOUT */
+    .split-container { 
+      display: flex; 
+      height: 100vh; 
+      width: 100vw; 
+      position: relative; 
+      z-index: 10; 
+    }
+
+    .split-side {
+      flex: 1; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center;
+      padding: 4rem; 
+      transition: flex 0.8s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s ease;
+      text-decoration: none; 
+      color: #fff; 
+      position: relative;
+      overflow: hidden;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .split-side:last-child { border-right: none; }
+
+    .split-side::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(139,0,0,0.2) 100%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .split-side:hover { 
+      flex: 1.5; 
+      background: rgba(139, 0, 0, 0.05); 
+    }
+    .split-side:hover::before { opacity: 1; }
+
+    /* CONTENT ELEMENTS */
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono';
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--p-red);
+      margin-bottom: 2rem;
+      opacity: 0.6;
+      transform: translateZ(30px);
+      text-align: center;
+      width: 100%;
+    }
+
+    .title { 
+      font-family: 'Archivo Black', sans-serif; 
+      font-size: clamp(2.5rem, 8vw, 5.5rem); 
+      text-transform: uppercase; 
+      line-height: 0.9;
+      margin-bottom: 1.5rem; 
+      font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      transition: all 0.5s ease;
+      transform: translateZ(60px);
+      text-align: center;
+      width: 100%;
+      animation: constantTilt 10s ease-in-out infinite;
+    }
+
+    @keyframes constantTilt {
+      0%, 100% { transform: perspective(1000px) rotateX(8deg) rotateY(-8deg) translateZ(60px); }
+      50% { transform: perspective(1000px) rotateX(-8deg) rotateY(8deg) translateZ(80px); }
+    }
+
+    .split-side:hover .title {
+      color: #fff;
+      -webkit-text-stroke: 1px transparent;
+      text-shadow: 0 0 30px rgba(255,0,0,0.8), var(--p-glow);
+      transform: translateZ(120px) scale(1.05) rotateX(0) rotateY(0) !important;
+      animation-play-state: paused;
+    }
+
+    /* PRELOADER */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s;
+    }
+    .preloader-content { text-align: center; }
+    .preloader-logo { font-family: 'Archivo Black'; font-size: 2rem; letter-spacing: 10px; color: var(--p-red); text-shadow: var(--p-glow); margin-bottom: 1rem; animation: pulseGlow 2s infinite; }
+    .preloader-bar { width: 200px; height: 1px; background: rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+    .preloader-progress { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--p-red); box-shadow: var(--p-glow); transition: width 0.4s; }
+    .preloader-meta { font-family: 'JetBrains Mono'; font-size: 8px; color: rgba(255,255,255,0.3); margin-top: 1rem; text-transform: uppercase; letter-spacing: 3px; }
+
+    @keyframes pulseGlow { 0%, 100% { opacity: 1; filter: brightness(1); } 50% { opacity: 0.7; filter: brightness(1.5); } }
+
+    .glow-text { text-shadow: var(--p-glow); }
+    .glow-border { border-color: var(--p-red); box-shadow: var(--p-glow); }
+
+    .desc { 
+      font-family: 'JetBrains Mono'; 
+      font-size: 0.75rem; 
+      color: rgba(255,255,255,0.4); 
+      max-width: 320px; 
+      letter-spacing: 0.2em; 
+      text-transform: uppercase;
+      line-height: 1.6;
+      transform: translateZ(40px);
+      transition: color 0.5s ease;
+    }
+
+    .split-side:hover .desc {
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* VIDEO BACKGROUND */
+    .video-bg { 
+      position: fixed; 
+      inset: 0; 
+      z-index: -10; 
+      background: #000; 
+      filter: none; /* Removed filters for full visibility */
+      transition: filter 1s ease;
+    }
+    .video-bg video { width: 100%; height: 100%; object-fit: cover; }
+
+    /* HEADER */
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      letter-spacing: -0.05em;
+      font-style: italic;
+    }
+
+    .nav-meta {
+      font-family: 'JetBrains Mono';
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+
+    /* DECORATIVE ELEMENTS */
+    .glitch-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--p-red);
+      mix-blend-mode: overlay;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0) }
+      20% { transform: translate(-5px, 5px) }
+      40% { transform: translate(-5px, -5px) }
+      60% { transform: translate(5px, 5px) }
+      80% { transform: translate(5px, -5px) }
+      100% { transform: translate(0) }
+    }
+
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+    .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="preloader-content">
+      <div class="preloader-logo">PESADILLA</div>
+      <div class="preloader-bar"><div class="preloader-progress" id="p-bar"></div></div>
+      <div class="preloader-meta" id="p-meta">DECODING_SELECTION_INTERFACE...</div>
+    </div>
+  </div>
+
+  <div class="grain"></div>
+  <div class="scanlines"></div>
+
+  <header>
+    <div class="logo">PESADILLA</div>
+    <nav class="hidden md:flex gap-12 font-mono text-[9px] uppercase tracking-[0.4em]">
+      <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">Lanzamientos</a>
+      <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">Selección</a>
+      <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-colors">Distribución</a>
+    </nav>
+    <div class="text-xl">🛒</div>
+  </header>
+
+  <div class="video-bg" id="vbg">
+    <video id="bgVideo" autoplay muted loop playsinline>
+      <source src="assets/PANDORA.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="split-container">
+    <a href="index.html" class="split-side" id="side-buy">
+      <div class="content-wrapper">
+        <div class="badge">// PROTOCOLO: ADQUISICIÓN</div>
+        <h2 class="title">COMPRAR</h2>
+        <p class="desc">Drops limitados de temporada. Logística directa al consumidor. Pago seguro.</p>
+      </div>
+    </a>
+
+    <a href="distribucion.html" class="split-side" id="side-sell">
+      <div class="content-wrapper">
+        <div class="badge">// PROTOCOLO: DISTRIBUCIÓN</div>
+        <h2 class="title">VENDER</h2>
+        <p class="desc">Infraestructura al por mayor. Programas para minoristas. Cadena de suministro global.</p>
+      </div>
+    </a>
+  </div>
+
+  <script src="assets/cursor.js"></script>
+  <script>
+    const sides = document.querySelectorAll('.split-side');
+    const vbg = document.getElementById('vbg');
+
+    // 3D & Hover Interaction
+    sides.forEach(side => {
+      side.addEventListener('mousemove', e => {
+        const r = side.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width - 0.5) * 30;
+        const y = ((e.clientY - r.top) / r.height - 0.5) * -30;
+        
+        const wrapper = side.querySelector('.content-wrapper');
+        wrapper.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg)`;
+      });
+
+      side.addEventListener('mouseenter', () => {
+        vbg.style.filter = 'grayscale(0.5) contrast(1.4) brightness(0.8)';
+      });
+
+      side.addEventListener('mouseleave', () => {
+        const wrapper = side.querySelector('.content-wrapper');
+        wrapper.style.transform = '';
+        vbg.style.filter = 'grayscale(1) contrast(1.2) brightness(0.6)';
+      });
+    });
+
+  </script>
+
+  <!-- LIBRARIES -->
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+  <script>
+    // SMOOTH SCROLL (LENIS)
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+  <script src="assets/cursor.js"></script>
+  <script>
+    // PRELOADER LOGIC
+    window.addEventListener('load', () => {
+      const bar = document.getElementById('p-bar');
+      const meta = document.getElementById('p-meta');
+      const preloader = document.getElementById('preloader');
+      
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 30;
+        if (progress > 100) progress = 100;
+        bar.style.width = progress + '%';
+        
+        if (progress === 100) {
+          clearInterval(interval);
+          meta.innerText = 'INTERFACE_READY_SELECT_YOUR_PATH';
+          setTimeout(() => {
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+          }, 800);
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>
+

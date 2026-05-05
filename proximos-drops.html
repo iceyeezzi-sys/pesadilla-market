@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es" class="bg-black">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PESADILLA – PRÓXIMOS DROPS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root { 
+      --p-red: #ff0000; 
+      --p-white: #E8D8D8; 
+      --bg-dark: #050505;
+      --p-glow: 0 0 15px rgba(255, 0, 0, 0.6);
+    }
+    
+
+    body, html { 
+      background: transparent !important; 
+      color: var(--p-white); 
+      overflow-x: hidden;
+      font-family: 'Syne', sans-serif;
+    }
+
+    /* TEXTURES */
+    .grain {
+      position: fixed;
+      inset: -50%;
+      z-index: 50;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PScwIDAgMjAwIDIwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nMC42NScgbnVtT2N0YXZlcz0nMycgc3RpdGNoVGlsZXM9J3N0aXRjaCcvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbHRlcj0ndXJsKCNuKScvPjwvc3ZnPg==');
+      opacity: 0.04;
+      pointer-events: none;
+    }
+        /* VIDEO DE FONDO */
+    .video-bg { 
+      position: fixed; 
+      inset: 0; 
+      z-index: -10; 
+      background: #000;
+    }
+    .video-bg video { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      filter: brightness(0.6) contrast(1.2) grayscale(0.2);
+    }
+
+    /* GLASSMORPHISM */
+    .glass {
+      background: rgba(0, 0, 0, 0.4) !important;
+      backdrop-filter: blur(15px) saturate(150%);
+      -webkit-backdrop-filter: blur(15px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* SCANLINES DINÁMICOS */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 51%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      opacity: 0.08;
+      animation: scanlineMove 12s linear infinite;
+    }
+    @keyframes scanlineMove {
+      from { background-position: 0 0; }
+      to { background-position: 0 100%; }
+    }
+
+    /* LÁSER DE BARRIDO */
+    .laser-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--p-red);
+      box-shadow: 0 0 20px var(--p-red);
+      z-index: 45;
+      opacity: 0.4;
+      animation: scan 8s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(-100vh); }
+      100% { transform: translateY(100vh); }
+    }
+
+    /* HOTSPOTS */
+    .hotspot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--p-red);
+      border-radius: 50%;
+      z-index: 100;
+      animation: blink 1.2s infinite;
+      cursor: none;
+    }
+    .hotspot-label {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #000;
+      color: #fff;
+      padding: 4px 10px;
+      font-family: 'JetBrains Mono';
+      font-size: 7px;
+      white-space: nowrap;
+      border: 1px solid var(--p-red);
+      opacity: 0;
+      transition: 0.3s;
+      pointer-events: none;
+      z-index: 100;
+      box-shadow: 0 0 10px rgba(255,0,0,0.3);
+    }
+    .hotspot.hotspot-left .hotspot-label {
+      left: auto;
+      right: 20px;
+    }
+    .hotspot:hover .hotspot-label {
+      opacity: 1;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(1.5); }
+    }
+
+    /* COUNTDOWN */
+    .countdown-container {
+      padding: 0.8rem 2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      border: 1px solid rgba(255, 0, 0, 0.2);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(0,0,0,0.6);
+    }
+    .countdown-numbers {
+      font-family: 'Archivo Black';
+      font-size: clamp(1.2rem, 4vw, 2.2rem);
+      color: var(--p-red);
+      letter-spacing: 6px;
+      text-shadow: 0 0 15px rgba(255,0,0,0.4);
+      font-style: italic;
+    }
+
+    /* CARDS */
+    .drop-card {
+      padding: 1.5rem;
+      transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      background: rgba(0,0,0,0.4) !important;
+    }
+    .drop-card:hover { 
+      border-color: var(--p-red); 
+      transform: translateY(-10px) scale(1.02);
+      background: rgba(30, 0, 0, 0.3) !important;
+    }
+    .silhouette { 
+      filter: brightness(0.3) contrast(1.2) grayscale(0.8); 
+      transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+    }
+    .drop-card:hover .silhouette { 
+      filter: brightness(0.9) contrast(1) grayscale(0); 
+      transform: scale(1.05);
+    }
+
+    /* BRACKETS EFFECT */
+    .drop-card::before, .drop-card::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--p-red);
+      opacity: 0;
+      transition: 0.3s;
+      z-index: 30;
+    }
+    .drop-card::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+    .drop-card::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+    .drop-card:hover::before, .drop-card:hover::after { opacity: 1; }
+
+    .pandora-footer {
+      font-family: 'JetBrains Mono';
+      font-size: 10px;
+      color: #0f0;
+      padding: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    }
+
+
+    header { padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
+    .logo { font-family: 'Archivo Black'; font-size: 1.8rem; letter-spacing: -2px; font-style: italic; }
+
+    /* CARRITO TÁCTICO */
+    .cart-tactical {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: 0.3s;
+    }
+    .cart-icon-box {
+      width: 24px;
+      height: 24px;
+      border: 1px solid rgba(255,255,255,0.4);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+    .cart-tactical:hover .cart-icon-box {
+      border-color: var(--p-red);
+      box-shadow: 0 0 10px var(--p-red);
+    }
+    .inventory-badge {
+      font-family: 'JetBrains Mono';
+      font-size: 8px;
+      color: var(--p-red);
+      letter-spacing: 1px;
+      animation: blink 1.5s infinite;
+    }
+    .cart-scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--p-red);
+      box-shadow: 0 0 5px var(--p-red);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .cart-tactical:hover .cart-scan-line {
+      animation: cartScan 1s linear infinite;
+      opacity: 1;
+    }
+    @keyframes cartScan {
+      0% { top: 0%; }
+      100% { top: 100%; }
+    }
+    .cart-status-label {
+      position: absolute;
+      right: 110%;
+      background: #000;
+      border: 1px solid var(--p-red);
+      padding: 4px 8px;
+      font-family: 'JetBrains Mono';
+      font-size: 7px;
+      color: #fff;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(10px);
+      transition: 0.3s;
+      pointer-events: none;
+    }
+    .cart-tactical:hover .cart-status-label {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glitch-flash" id="flash-overlay"></div>
+  
+  <!-- VIDEO DE FONDO -->
+  <div class="video-bg">
+    <video autoplay muted loop playsinline preload="auto">
+      <source src="assets/PANDORA2.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="laser-line"></div>
+  <div class="grain"></div>
+  <div class="scanlines"></div>
+
+  <header>
+    <div class="logo">PESADILLA</div>
+    <nav class="hidden md:flex gap-10 font-mono text-[10px] uppercase tracking-[0.4em]">
+      <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-all">Lanzamientos</a>
+      <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-all">Selección</a>
+      <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-all">Distribución</a>
+    </nav>
+    
+    <!-- INVENTARIO TÁCTICO -->
+    <div class="cart-tactical">
+      <div class="cart-status-label">CHECKING_INVENTORY...</div>
+      <div class="inventory-badge">INV_LOAD: [0]</div>
+      <div class="cart-icon-box">
+        <div class="cart-scan-line"></div>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto pt-12 px-6 relative z-10">
+    <div class="text-center mb-16">
+      <h1 class="font-black text-7xl italic tracking-tighter mb-4 text-white">PRÓXIMOS DROPS</h1>
+      <p class="font-mono text-[9px] opacity-40 tracking-[0.6em] text-red-500">// ACCESO_A_LA_BOVEDA_CONCEDIDO_NIVEL_MAX //</p>
+    </div>
+
+    <!-- RELOJ -->
+    <div class="countdown-container glass">
+      <div class="font-mono text-[11px] mb-8 opacity-60 tracking-[0.5em] text-white">TIEMPO_ESTIMADO_DE_DESBLOQUEO:</div>
+      <div class="countdown-numbers" id="timer">00:00:00:00</div>
+      <div class="mt-8 h-[1px] w-full bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-30"></div>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <!-- DROP 1 -->
+      <div class="drop-card glass">
+        <div class="aspect-[4/5] bg-neutral-900 relative overflow-hidden mb-6 border border-white/5">
+          <img src="assets/DROP_1.jpg" class="w-full h-full object-cover silhouette">
+          <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-red-900/10 pointer-events-none">
+            <span class="font-mono text-[10px] font-bold text-red-600">SCANNING_OBJECT...</span>
+          </div>
+        </div>
+        <div class="font-mono text-[10px] text-red-600 mb-2">15 / MAY / 2026</div>
+        <h3 class="font-bold text-lg mb-1 uppercase">ETERNA OSCURIDAD</h3>
+        <p class="font-mono text-[9px] opacity-40 mb-6 uppercase tracking-widest leading-loose">
+          Análisis: Impresión alta densidad<br>
+          Detalle: Tejido reforzado
+        </p>
+        <button onclick="reserveDrop('Drop_001: Eterna Oscuridad')" class="block w-full border border-white/10 text-center py-3 text-[10px] font-bold hover:bg-red-600 hover:border-red-600 transition-all uppercase tracking-widest">RESERVAR ACCESO_</button>
+      </div>
+
+      <!-- DROP 2 -->
+      <div class="drop-card">
+        <div class="aspect-[4/5] bg-neutral-900 relative overflow-hidden mb-6 border border-white/5">
+          <img src="assets/DROP_2.jpg" class="w-full h-full object-cover silhouette">
+        </div>
+        <div class="font-mono text-[10px] text-red-600 mb-2">02 / JUN / 2026</div>
+        <h3 class="font-bold text-lg mb-1 uppercase">RITUAL URBANO</h3>
+        <p class="font-mono text-[9px] opacity-40 mb-6 uppercase tracking-widest leading-loose">
+          Análisis: Corte premium oversize<br>
+          Entorno: Vintage detectado
+        </p>
+        <button onclick="reserveDrop('Drop_002: Ritual Urbano')" class="block w-full border border-white/10 text-center py-3 text-[10px] font-bold hover:bg-red-600 hover:border-red-600 transition-all uppercase tracking-widest">RESERVAR ACCESO_</button>
+      </div>
+
+      <!-- DROP 3 -->
+      <div class="drop-card">
+        <div class="aspect-[4/5] bg-neutral-900 relative overflow-hidden mb-6 border border-white/5">
+          <img src="assets/DROP_3.jpg" class="w-full h-full object-cover silhouette">
+        </div>
+        <div class="font-mono text-[10px] text-red-600 mb-2">20 / JUN / 2026</div>
+        <h3 class="font-bold text-lg mb-1 uppercase">ALMAS EN PENA</h3>
+        <p class="font-mono text-[9px] opacity-40 mb-6 uppercase tracking-widest leading-loose">
+          Análisis: Bordado 3D Logo<br>
+          Detección: Alta visibilidad
+        </p>
+        <button onclick="reserveDrop('Drop_003: Almas en Pena')" class="block w-full border border-white/10 text-center py-3 text-[10px] font-bold hover:bg-red-600 hover:border-red-600 transition-all uppercase tracking-widest">RESERVAR ACCESO_</button>
+      </div>
+    </div>
+
+    <div class="pandora-footer">
+      <span id="p-text"></span><span class="cursor-blink">_</span>
+    </div>
+  </main>
+
+  <script src="assets/cursor.js"></script>
+  <script>
+    // TIMER
+    function updateTimer() {
+      const target = new Date("May 15, 2026 00:00:00").getTime();
+      const now = new Date().getTime();
+      const diff = target - now;
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById('timer').innerText = `${d.toString().padStart(2,'0')}:${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // PANDORA TYPING
+    const text = "PANDORA_STATUS: MONITORING_USER_INTEREST... [SYSTEM_OK] // ENCRYPTING_RESERVATIONS... // ACCESO_A_LA_BOVEDA_CONCEDIDO.";
+    let charIdx = 0;
+    function type() {
+      if (charIdx < text.length) {
+        document.getElementById('p-text').innerHTML += text.charAt(charIdx);
+        charIdx++;
+        setTimeout(type, 50);
+      }
+    }
+    setTimeout(type, 1000);
+
+    // GLITCH FLASH ON INTERACTION
+    document.querySelectorAll('a, .hotspot, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        const flash = document.getElementById('flash-overlay');
+        flash.style.animation = 'flash 0.3s ease-out';
+        setTimeout(() => flash.style.animation = '', 300);
+      });
+    });
+
+    // RESERVA POR WHATSAPP
+    function reserveDrop(dropName) {
+      const phone = "59160390130"; 
+      const message = `Hola, vi el ${dropName} y me gustaría hacer una reserva.`;
+      const encodedMsg = encodeURIComponent(message);
+      const flash = document.getElementById('flash-overlay');
+      flash.style.animation = 'flash 0.5s ease-out';
+      setTimeout(() => {
+        window.open(`https://wa.me/${phone}?text=${encodedMsg}`, '_blank');
+      }, 300);
+    }
+  </script>
+</body>
+</html>

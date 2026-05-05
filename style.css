@@ -1,0 +1,1458 @@
+/* ==========================================================================
+   Pesadilla – Dark Streetwear Store
+   Colors: background #000000, card #050505, accent #ffffff, text #E0E0E0
+   ========================================================================== */
+
+/* ---------- Variables ---------- */
+:root {
+  --black: #000;
+  --card-bg: #0a0000;
+  --border-subtle: rgba(139,0,0,0.15);
+  --border-medium: rgba(220,20,60,0.3);
+  --accent: #8B0000;
+  --accent-glow: #DC143C;
+  --text: #E8D8D8;
+  --muted: #8B6B6B;
+  --font-title: 'Syne', sans-serif;
+  --font-body: 'Inter', 'Syne', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Roboto Mono', monospace;
+  --spacing-section: 1.5rem;
+  --spacing-card: 0.5rem;
+  /* Variables faltantes */
+  --border: rgba(255,255,255,0.1);
+  --dark-gray: #0a0a0a;
+  --glass: rgba(255,255,255,0.08);
+  --gothic-red: #8B0000;
+  --surgical-white: #ffffff;
+  --font-header: 'Archivo Black', sans-serif;
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: transparent; /* Para que el video se vea */
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+/* Sin ruido - pureza visual */
+
+/* ---------- Background video ---------- */
+.bg-video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+.bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+/* ---------- Header (Estilo Gucci: Minimalista fijo, invisible) ---------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  backdrop-filter: blur(15px);
+  background: rgba(5,5,5,0.85);
+  z-index: 1000;
+  border-bottom: 1px solid var(--border-subtle);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.site-header.visible {
+  opacity: 1;
+}
+
+.site-header h1 {
+  font-family: var(--font-header);
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  color: var(--accent);
+  margin: 0;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.site-header nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: color 0.3s ease;
+}
+
+.site-header nav a:hover {
+  color: var(--accent);
+}
+
+/* ---------- Cart Icon ---------- */
+.cart-icon {
+  position: relative;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 0.8rem;
+  margin-left: 2rem;
+  transition: color 0.3s ease;
+}
+
+.cart-icon:hover {
+  color: var(--accent);
+}
+
+.cart-text {
+  font-family: 'Syne', sans-serif;
+}
+
+/* ---------- Cart Sidebar ---------- */
+#cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translateX(100%);
+  width: 300px;
+  height: 100vh;
+  background: transparent;
+  border-left: 1px solid var(--border-subtle);
+  backdrop-filter: blur(20px);
+  padding: 1rem;
+  z-index: 200;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow-y: auto;
+  will-change: transform;
+}
+
+#cart-sidebar.open {
+  transform: translateX(0);
+}
+
+#cart-sidebar h2 {
+  color: var(--accent);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+#cart-items {
+  list-style: none;
+  margin-bottom: 0.1rem;
+}
+
+#cart-items li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+}
+
+#cart-items li button {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+#cart-total {
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin: 1rem 0;
+}
+
+#clear-cart {
+  background-color: var(--accent);
+  color: var(--surgical-white);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#clear-cart:hover {
+  background-color: var(--accent-glow);
+}
+
+#cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0, 0.7);
+  z-index: 150;
+  display: none;
+}
+
+#cart-overlay.open {
+  display: block;
+}
+
+/* ---------- Category Sections (Rick Owens: mucho aire) ---------- */
+.category-section {
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 0.5rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.category-title {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  color: #fff; /* Blanco puro */
+  text-transform: uppercase;
+  letter-spacing: 0.15em; /* Más aire */
+  margin-bottom: 0.1rem;
+  font-weight: 800;
+}
+
+.category-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ---------- Product Grid (Estilo Rick Owens: 2 cols, mucho aire) ---------- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 2 cols en desktop */
+  gap: 0.3rem; /* Espaciado generoso */
+  padding: 0 0.2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  /* Espacio 3D para el grid */
+  perspective: 1200px;
+  overflow: visible !important; /* Vital para que el 3D no se corte */
+}
+
+/* ---------- 3D Space Enabling Rules ---------- */
+/* 1. Enable 3D perspective in any card container */
+.product-grid,
+.selection-container,
+.distro-grid {
+  perspective: 1200px !important;
+  overflow: visible !important;
+}
+
+/* 2. Base properties for cards so JS can move them */
+.product-card {
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+  will-change: transform;
+  overflow: visible !important;
+  background: rgba(10,0,0, 0.9);
+  border: 1px solid rgba(139,0,0,0.1);
+  padding: 0.3rem;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Efecto de profundidad para el contenido interno */
+.product-card > * {
+  transform: translateZ(20px); /* Hace que el texto flote sobre la imagen */
+}
+.product-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 15px var(--accent);
+}
+
+/* Opcional: Eleva la media (video/imagen) para el efecto Parallax */
+.modo-vigilancia .product-card .product-media {
+  transform: translateZ(10px); /* Resalta la media en el Modo Vigilancia */
+}
+
+/* ---------- Combo cards (Vertical & Premium) ---------- */
+.product-card.combo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 20px rgba(200,16,46, 0.1);
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.product-card.combo-card .product-media {
+  flex: none;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: none;
+}
+
+.product-card.combo-card .product-media img,
+.product-card.combo-card .product-media video {
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card.combo-card .product-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.combo-card .product-name {
+  font-size: 0.8rem;
+  margin-top: 0;
+}
+
+.combo-card .product-desc {
+  font-size: 0.8rem;
+  margin: 1rem 0;
+}
+
+.combo-card .price-grid {
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .product-card.combo-card {
+    max-width: 100%;
+  }
+}
+
+.product-card:hover {
+  border-color: rgba(255,255,255, 0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0, 0.5), 0 0 15px var(--accent);
+}
+
+/* ---------- Combo Badge ---------- */
+.combo-card .combo-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--gothic-red);
+  color: var(--surgical-white);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  z-index: 10;
+  letter-spacing: 0.05em;
+}
+
+/* ---------- Product Media ---------- */
+.product-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  max-height: 280px;
+  overflow: hidden;
+}
+
+.product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.2) brightness(0.9);
+  transition: opacity 0.4s ease;
+}
+
+.product-card:hover .product-media img {
+  opacity: 0;
+}
+
+.product-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.product-card:hover .product-video {
+  opacity: 1;
+}
+
+/* ---------- Product Info ---------- */
+.product-name {
+  font-family: var(--font-body); /* Syne: elegant luxury titles */
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.product-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0.2rem 0;
+}
+
+/* ---------- Price Grid ---------- */
+.price-grid {
+  margin: 0.3rem 0 0.6rem;
+}
+
+/* Highlighted "Unidad" price */
+.price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.price-main .price-value {
+  font-size: 1.3rem;
+  color: var(--accent);
+  font-weight: bold;
+  font-family: var(--font-header); /* Archivo Black: technical/engineering */
+}
+.price-engineer {
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+}
+
+.price-main .price-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Subtle prices (1/4, media, docena) */
+.price-subtle {
+  border-top: 1px solid var(--border);
+  padding-top: 0.8rem;
+  background: var(--dark-gray);
+  padding: 0.6rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  border-radius: 4px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.3rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+}
+
+.price-row .price-value {
+  color: var(--text);
+  font-weight: bold;
+}
+
+.price-row .price-qty {
+  color: #777;
+  font-size: 0.85rem;
+}
+
+/* ---------- Button: Añadir al Carrito ---------- */
+.btn-add-to-cart {
+  background-color: var(--accent);
+  color: var(--surgical-white);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  width: 180px;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.btn-add-to-cart:hover:not(:disabled) {
+  background-color: var(--accent-glow);
+  transform: scale(1.02);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.btn-add-to-cart:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- Institutional CTA ---------- */
+.institucional-cta {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.institucional-cta a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.institucional-cta a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- WhatsApp Floating Button (Gothic) ---------- */
+.whatsapp-float {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--gothic-red);
+  color: var(--surgical-white);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.2rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border: 2px solid var(--black);
+  box-shadow: 0 4px 20px rgba(176,0,32, 0.6);
+  z-index: 99999;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: whatsapp-pulse 1.5s infinite;
+}
+
+.whatsapp-float:hover {
+  transform: translateX(-50%) scale(1.08);
+  box-shadow: 0 8px 30px rgba(176,0,32, 0.8);
+}
+
+.whatsapp-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+
+@keyframes whatsapp-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(200,16,46, 0.7); }
+  50% { box-shadow: 0 0 0 20px rgba(200,16,46, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(200,16,46, 0.7); }
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background-color: var(--dark-gray);
+  text-align: center;
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: #777;
+}
+
+/* ---------- Button: Finalizar Pedido ---------- */
+.btn-checkout {
+  background-color: white;
+  color: var(--surgical-white);
+  border: none;
+  padding: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.btn-checkout:hover {
+  background-color: var(--accent);
+  transform: scale(1.02);
+}
+
+/* ---------- Payment Modal ---------- */
+.payment-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(10px);
+}
+
+.payment-modal.open {
+  display: flex;
+}
+
+.modal-content {
+  background-color: var(--dark-gray);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 800px;
+  position: relative;
+  text-align: center;
+}
+
+.close-modal {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.modal-title {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin-bottom: 0.1rem;
+}
+
+.modal-subtitle {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+}
+
+.order-summary-box {
+  background: var(--glass);
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  margin-bottom: 2.5rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+.summary-row.accent {
+  font-weight: bold;
+  color: var(--accent);
+  font-size: 1.2rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.payment-methods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.method-box h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.1rem;
+  text-transform: uppercase;
+}
+
+.qr-placeholder {
+  aspect-ratio: 1;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+  border-radius: 8px;
+}
+
+.bank-card {
+  background: linear-gradient(135deg, #222 0%, #111 100%);
+  padding: 1.5rem;
+  text-align: left;
+  border-radius: 12px;
+  border: 1px solid #333;
+}
+
+.bank-card p {
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+}
+
+.modal-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.btn-send-whatsapp {
+  display: block;
+  background-color: #25D366;
+  color: white;
+  text-decoration: none;
+  padding: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.btn-send-whatsapp:hover {
+  transform: translateY(-5px);
+}
+
+/* ---------- Responsive Tweaks ---------- */
+@media (max-width: 768px) {
+  .payment-methods {
+    grid-template-columns: 1fr;
+  }
+  .modal-content {
+    padding: 2rem 1.5rem;
+    height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-title {
+    font-size: 0.8rem;
+  }
+  .site-header {
+    backdrop-filter: none;
+    background: rgba(10,10,10,0.98);
+    padding: 0.3rem;
+  }
+  .site-header h1 {
+    font-size: 0.8rem;
+  }
+  .site-header nav {
+    display: none; 
+  }
+  .category-section {
+    padding: 4rem 1rem 2rem;
+  }
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .product-card:hover {
+    transform: none; 
+  }
+  .product-card:active {
+    background-color: rgba(255,255,255, 0.05);
+  }
+  .product-name {
+    font-size: 1.6rem;
+  }
+  .price-main .price-value {
+    font-size: 0.8rem;
+  }
+  #cart-sidebar {
+    width: 100vw;
+  }
+  .whatsapp-float {
+    bottom: 1rem;
+    width: 90%;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+  }
+  .whatsapp-icon {
+    font-size: 1.2rem;
+  }
+}
+
+/* ---------- NFC Pulse (RTFKT) ---------- */
+.nfc-pulse {
+  position: relative;
+  display: inline-block;
+}
+.nfc-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0.6;
+}
+
+/* ---------- Scrollytelling effects (RTFKT) ---------- */
+[data-scroll] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+[data-scroll].in-view {
+  opacity: 1;
+  transform: none;
+}
+/* ---------- Swiper slide spacing ---------- */
+.swiper {
+  gap: 1.5rem; /* visible separation between slides */
+}
+.swiper-slide {
+  margin-right: 1.5rem; /* extra space on each slide */
+}
+
+.ticker-content span {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+
+/* ---------- Hero Editorial Carousel (END. Style) ---------- */
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  height: 90vh; /* Ocupa casi toda la pantalla inicial */
+  background: var(--black);
+  overflow: hidden;
+}
+
+.hero-carousel .carousel-container {
+  height: 100%;
+  width: 100%;
+}
+
+.hero-carousel .carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s;
+  display: flex;
+  align-items: flex-end;
+  padding: 4rem;
+}
+
+.hero-carousel .carousel-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 40%, transparent 100%);
+  z-index: 1;
+}
+
+.slide-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  transform: translateY(20px);
+  transition: transform 0.8s ease-out;
+}
+
+.hero-carousel .carousel-slide.active .slide-content {
+  transform: translateY(0);
+}
+
+.slide-tag {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 0.1rem;
+}
+
+.slide-title {
+  font-family: var(--font-header);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  letter-spacing: -2px;
+}
+
+.slide-subtitle {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 2.5rem;
+  max-width: 450px;
+}
+
+.slide-actions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.btn-editorial {
+  display: inline-block;
+  background: #fff;
+  color: #FFFFFF;
+  padding: 1.2rem 2.5rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-editorial:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.slide-price {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+/* --- Progress Bars --- */
+.carousel-progress-container {
+  position: absolute;
+  bottom: 2rem;
+  left: 4rem;
+  right: 4rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.progress-bar-wrapper {
+  flex: 1;
+  cursor: pointer;
+  padding: 1rem 0;
+}
+
+.progress-bar-fill {
+  height: 2px;
+  background: rgba(255,255,255,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 0;
+  background: #fff;
+}
+
+.progress-bar-wrapper.active .progress-bar-fill::after {
+  width: 100%;
+  transition: width 4.8s linear; /* Match the auto-rotate time */
+}
+
+.progress-label {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+  transition: color 0.3s;
+}
+
+.progress-bar-wrapper.active .progress-label {
+  color: #fff;
+}
+
+/* Responsive Editorial */
+@media (max-width: 768px) {
+  .hero-carousel { height: 70vh; }
+  .hero-carousel .carousel-slide { padding: 1rem; }
+  .slide-actions { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .carousel-progress-container { left: 2rem; right: 2rem; bottom: 1rem; }
+  .progress-label { display: none; } /* Hide labels on mobile to save space */
+}
+.chromatic-aberration::before { left: var(--chromatic-aberration); }
+.chromatic-aberration::after { left: calc(-1 * var(--chromatic-aberration)); }
+
+/* ---------- Price Engineering (monospaced) ---------- */
+.price-engineer {
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+/* Reducir movimiento si el sistema lo pide */
+
+/* Telaraña del título */
+.gothic-spiderweb {
+  font-size: 1.2rem;
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Featured Carousel (CARRUSEL DESTACADOS) ---------- */
+.featured-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+.featured-slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+.featured-progress-container .progress-bar-wrapper .progress-bar-fill-inner {
+  width: 0%;
+  transition: width 3s linear;
+}
+.featured-progress-container .progress-bar-wrapper.active .progress-bar-fill-inner {
+  width: 100%;
+}
+.featured-progress-container .progress-bar-wrapper .progress-label {
+  transition: color 0.3s;
+}
+.featured-progress-container .progress-bar-wrapper.active .progress-label {
+  color: #fff;
+}
+
+/* ---- Rick Owens inspired overrides ---- */
+.product-card {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  padding: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+.product-card:hover {
+  border-color: var(--border-medium);
+  transform: translateZ(200px) translateY(-20px) rotateX(5deg);
+}
+.product-name {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.1rem;
+}
+.price-value {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+}
+.btn-add-to-cart {
+  background: #fff;
+  color: var(--surgical-white);
+  border: 1px solid #fff;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  width: auto;
+}
+.btn-add-to-cart:hover {
+  background: var(--black);
+  color: #fff;
+}
+/* Hero title estilo Owens */
+.hero-title {
+  font-family: var(--font-title);
+  font-size: clamp(4rem, 15vw, 12rem);
+  color: #fff;
+  letter-spacing: -2px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+/* ---- Mobile adjustments (Rick Owens: 1 col, tight) ---- */
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem 1.5rem;
+    padding: 0 1.5rem;
+  }
+  .category-section {
+    padding: 4rem 1.5rem;
+    margin-bottom: 4rem;
+  }
+  .hero-title {
+    font-size: clamp(2.5rem, 10vw, 6rem);
+  }
+  .site-header h1 {
+    font-size: 1.1rem;
+  }
+  .product-card {
+    margin-bottom: 4rem;
+  }
+  .product-name {
+    font-size: 1.1rem;
+  }
+}
+
+/* ====== DARK VAMPIRE THEME ====== */
+
+
+
+/* Overlay sangriento sobre el video de fondo */
+.bg-video-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(139,0,0,0.3) 0%, transparent 30%, transparent 70%, rgba(80,0,0,0.4) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Brillo rojo sutil en texto */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(220,20,60,0.15) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ajuste de contraste vampiro */
+body {
+  background-color: var(--surgical-white);
+  color: var(--text);
+}
+
+/* Header vampiro: negro sangre con borde carmesí */
+.site-header {
+  background: rgba(5,0,0,0.9) !important;
+  border-bottom: 1px solid var(--border-medium) !important;
+}
+
+.site-header h1 {
+  color: var(--accent) !important;
+  text-shadow: 0 0 10px rgba(139,0,0,0.8);
+}
+
+/* Navegación */
+.site-header nav a {
+  color: var(--text) !important;
+  opacity: 0.7;
+}
+.site-header nav a:hover {
+  color: var(--accent-glow) !important;
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(220,20,60,0.6);
+}
+
+/* Tarjetas vampiro - sin !important para permitir efectos 3D */
+.product-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+}
+.product-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 80px rgba(139,0,0,0.3);
+  transform: rotateX(8deg) rotateY(8deg) translateZ(30px);
+}
+
+/* Títulos de sección */
+.category-title {
+  color: var(--accent) !important;
+  text-shadow: 0 0 15px rgba(139,0,0,0.5);
+}
+
+/* Precios */
+.price-value {
+  color: var(--accent-glow) !important;
+}
+
+/* Botones vampiro */
+.btn-add-to-cart {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border: 1px solid var(--accent-glow) !important;
+  text-shadow: 0 0 5px rgba(0,0,0,0.8);
+}
+.btn-add-to-cart:hover {
+  background: var(--accent-glow) !important;
+  box-shadow: 0 0 15px rgba(220,20,60,0.6);
+  transform: scale(1.02);
+}
+
+/* Hero title con brillo sangriento */
+.hero-title {
+  color: #fff !important;
+  text-shadow: 0 0 30px rgba(139,0,0,0.8), 0 0 60px rgba(220,20,60,0.4);
+}
+
+/* ====== VAMPIRE SPECIFIC EFFECTS ====== */
+
+/* Cursor personalizado: colmillo/bat */
+body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="%238B0000"/></svg>'), auto;
+}
+
+/* Brillo en hover para tarjetas */
+.product-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(45deg, transparent 30%, rgba(139,0,0,0.3) 50%, transparent 70%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.product-card:hover::before {
+  opacity: 1;
+}
+
+/* Efecto de "sangre" sutil en títulos */
+.category-title:hover {
+  text-shadow: 0 0 20px rgba(139,0,0,0.8), 0 0 40px rgba(220,20,60,0.4);
+  transition: text-shadow 0.3s ease;
+}
+
+/* Cart sidebar vampiro */
+#cart-sidebar {
+  background: var(--card-bg) !important;
+  border-left: 1px solid var(--border-medium) !important;
+}
+#cart-sidebar h2 {
+  color: var(--accent) !important;
+  text-shadow: 0 0 10px rgba(139,0,0,0.7);
+}
+#cart-total {
+  color: var(--accent-glow) !important;
+}
+
+/* Payment modal vampiro */
+.payment-modal {
+  background: rgba(5,0,0,0.95) !important;
+}
+.modal-content {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-medium) !important;
+}
+.modal-title {
+  color: var(--accent) !important;
+  text-shadow: 0 0 15px rgba(220,20,60,0.6);
+}
+
+/* WhatsApp button vampiro */
+.whatsapp-float {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border: 1px solid var(--accent-glow) !important;
+  box-shadow: 0 0 20px rgba(139,0,0,0.6), 0 0 40px rgba(139,0,0,0.3) !important;
+}
+.whatsapp-float:hover {
+  background: var(--accent-glow) !important;
+  box-shadow: 0 0 30px rgba(220,20,60,0.8) !important;
+  transform: translateX(-50%) scale(1.08);
+}
+
+/* Pines modal vampiro */
+.pines-modal {
+  background: rgba(5,0,0,0.95) !important;
+}
+.pines-info h2 {
+  color: var(--accent) !important;
+  text-shadow: 0 0 15px rgba(139,0,0,0.6);
+}
+
+/* Scrollbar vampiro */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-glow);
+}
+
+/* ====== GLITCH EFFECT ON SCROLL ====== */
+.glitch-active {
+  animation: glitch-anim 0.3s infinite;
+  text-shadow: none;
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); text-shadow: 2px 0 #8B0000, -2px 0 #DC143C; }
+  40% { transform: translate(2px, -1px); text-shadow: -2px 0 #8B0000, 2px 0 #DC143C; }
+  60% { transform: translate(-1px, 1px); text-shadow: 1px 0 #8B0000, -1px 0 #DC143C; }
+  80% { transform: translate(1px, -2px); text-shadow: -1px 0 #8B0000, 1px 0 #DC143C; }
+  100% { transform: translate(0); }
+}
+
+/* ---------- Destacados Scroll Animation ---------- */
+.featured-scroll-wrapper {
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.featured-scroll-track {
+  width: max-content;
+  animation: scroll-left 20s linear infinite;
+}
+
+.featured-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.featured-item {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.featured-item:hover {
+  transform: scale(1.05);
+  border-color: var(--accent) !important;
+}
+
+/* Cuando el Modo Vigilancia está activo, el flotado es más alto y el brillo más intenso */
+.modo-vigilancia .product-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 25px 50px rgba(220,20,60,0.4);
+  border-color: var(--accent-glow);
+}
+
+/* ====== MODO VIGILANCIA (Visión Nocturna Dinámica) ====== */
+
+/* Estado de alerta: modo vigilancia */
+.modo-vigilancia {
+    transition: all 1s ease-in-out;
+}
+
+/* Grano de película más agresivo */
+.modo-vigilancia .vampire-bg::before {
+    opacity: 0.15; /* Subimos del 0.05 original */
+}
+
+/* Resplandor rojo en bordes de tarjetas y botones */
+.modo-vigilancia .product-card,
+.modo-vigilancia .category-section {
+    border-color: rgba(139,0,0,0.4);
+    box-shadow: 0 0 15px rgba(139,0,0,0.1);
+}
+
+/* Glitch más frecuente en el logo/header */
+.modo-vigilancia .glitch-active {
+    animation: glitch-anim 0.2s infinite;
+}
+
+/* Glow en los precios */
+.modo-vigilancia .price-value {
+    text-shadow: 0 0 8px rgba(220,20,60,0.6);
+    color: #DC143C;
+}
+
+/* Flicker en el logo del header (luz de neón fallida) */
+.modo-vigilancia .site-header h1 {
+    animation: logo-flicker 2s infinite alternate;
+}
+
+@keyframes logo-flicker {
+    0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(139,0,0,0.8); }
+    10% { opacity: 0.8; }
+    20% { opacity: 1; }
+    30% { opacity: 0.6; text-shadow: none; }
+    40% { opacity: 1; text-shadow: 0 0 20px rgba(220,20,60,0.9); }
+    50% { opacity: 0.9; }
+    60% { opacity: 1; }
+    70% { opacity: 0.7; text-shadow: none; }
+    80% { opacity: 1; }
+    90% { opacity: 0.85; }
+}
+
+/* 3D Hero Title (Pesadilla Market) */
+#hero-title-section { perspective: 1200px; }
+#hero-title { transform-style: preserve-3d; transition: transform 0.1s ease-out; }
+
+/* ---------- GLOBAL CUSTOM CURSOR ---------- */
+* {
+  cursor: none !important;
+}
+
+#cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: #ff0000;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  mix-blend-mode: difference;
+  display: block;
+  will-change: transform;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px rgba(255,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ff0000;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999998;
+  display: block;
+  will-change: transform;
+  box-shadow: 0 0 15px rgba(255,0,0,0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Ocultar cursor nativo y personalizado en móviles */
+@media (max-width: 1024px) {
+  * { cursor: auto !important; }
+  #cursor, #cursor-follower { display: none !important; }
+}
