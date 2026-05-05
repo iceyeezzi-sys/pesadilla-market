@@ -1489,16 +1489,7 @@
               if(e.key === 'Enter') checkCode();
             });
 
-            const vInput = document.getElementById('verifyCode');
             vInput.focus();
-            vInput.addEventListener('input', () => {
-              if(vInput.value === serverCode) { 
-                hAlert.innerHTML = `B1ENVEN1D0 4 L4 P3S4D1LL4\n${toLeet(nameInput)}_`;
-                hAlert.style.boxShadow = '0 0 100px #0f0';
-                
-                // GUARDAR ACCESO Y REDIRIGIR
-                localStorage.setItem('pesadilla_access', 'true');
-
                 setTimeout(() => {
                   window.location.href = 'index.html';
                 }, 2000);
