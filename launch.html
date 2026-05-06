@@ -6,8 +6,8 @@
   <title>PESADILLA – ACCESO EXCLUSIVO</title>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
   <link rel="stylesheet" href="style.css">
   <script>
     // REDIRECCIÓN INSTANTÁNEA PARA USUARIOS REGISTRADOS
@@ -1136,9 +1136,16 @@
   <script src="assets/cursor.js"></script>
   <script>
 
-    const itl = window.intlTelInput(document.querySelector('#whatsapp'), { 
-      initialCountry: 'bo', 
-      utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js' 
+    let itl;
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.querySelector("#whatsapp");
+      if(input) {
+        itl = window.intlTelInput(input, {
+          initialCountry: "bo",
+          separateDialCode: true,
+          utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+        });
+      }
     });
 
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbytXi9k7N3Ifl04t0IRkGJtStddiiJ858RQZJ667sI2Z0ikhzrAJGpayJR3rjMeW65_Qg/exec';
