@@ -889,13 +889,14 @@
       letter-spacing: 2px;
     }
 
-    .iti { width: 100%; margin-bottom: 1rem; }
+    .iti { width: 100%; }
     #whatsapp {
       width: 100%;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,0,0,0.2);
-      color: white;
-      padding: 10px;
+      background: rgba(255,255,255,0.05) !important;
+      border: 1px solid rgba(255,0,0,0.2) !important;
+      color: white !important;
+      padding: 1rem !important;
+      padding-left: 80px !important; /* FIX BANDERA */
     }
     .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
   </style>
@@ -1133,17 +1134,13 @@
   <script src="assets/cursor.js"></script>
   <script>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const whatsappInput = document.querySelector("#whatsapp");
-      if (whatsappInput) {
-        window.intlTelInput(whatsappInput, {
-          initialCountry: 'bo',
-          preferredCountries: ['bo', 'pe', 'cl', 'ar'],
-          separateDialCode: true,
-          utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
-        });
-      }
-    });
+    const whatsappInput = document.querySelector("#whatsapp");
+    if (whatsappInput) {
+      window.intlTelInput(whatsappInput, {
+        initialCountry: 'bo',
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
+      });
+    }
 
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbytXi9k7N3Ifl04t0IRkGJtStddiiJ858RQZJ667sI2Z0ikhzrAJGpayJR3rjMeW65_Qg/exec';
 
