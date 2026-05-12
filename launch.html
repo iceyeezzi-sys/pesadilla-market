@@ -905,7 +905,9 @@
       border: 1px solid rgba(255,0,0,0.2) !important;
       padding-top: 15px !important;
       padding-bottom: 15px !important;
+      padding-left: 60px !important; /* ESPACIO PARA LA BANDERA */
     }
+    .iti__flag-container { padding-left: 10px !important; }
     .iti__country-name, .iti__dial-code { color: #fff !important; }
     .iti__country.iti__highlight { background-color: #ff0000 !important; }
     .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
@@ -1143,15 +1145,17 @@
 
     let itl;
     document.addEventListener('DOMContentLoaded', () => {
-      const input = document.querySelector("#whatsapp");
-      if(input) {
-        itl = window.intlTelInput(input, {
-          initialCountry: "bo",
-          preferredCountries: ["bo", "ar", "cl", "pe", "mx", "es"],
-          separateDialCode: true,
-          utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
-        });
-      }
+      setTimeout(() => {
+        const input = document.querySelector("#whatsapp");
+        if(input && window.intlTelInput) {
+          itl = window.intlTelInput(input, {
+            initialCountry: "bo",
+            preferredCountries: ["bo", "ar", "cl", "pe", "mx", "es"],
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+          });
+          console.log("PANDORA: Selector de países activado.");
+        }
+      }, 500);
     });
 
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbytXi9k7N3Ifl04t0IRkGJtStddiiJ858RQZJ667sI2Z0ikhzrAJGpayJR3rjMeW65_Qg/exec';
