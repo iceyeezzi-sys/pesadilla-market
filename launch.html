@@ -6,8 +6,8 @@
   <title>PESADILLA – ACCESO EXCLUSIVO</title>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@21.0.8/build/css/intlTelInput.css">
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@21.0.8/build/js/intlTelInput.min.js"></script>
   <link rel="stylesheet" href="style.css">
   <script>
     // REDIRECCIÓN INSTANTÁNEA PARA USUARIOS REGISTRADOS
@@ -1156,9 +1156,10 @@
             initialCountry: "bo",
             preferredCountries: ["bo", "ar", "cl", "pe", "mx", "es"],
             separateDialCode: true,
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            countrySearch: true, // ACTIVA LA BARRA DE BÚSQUEDA
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@21.0.8/build/js/utils.js",
           });
-          console.log("PANDORA: Banderas forzadas.");
+          console.log("PANDORA: Selector Táctico v21 activado.");
         }
       }, 800);
     });
