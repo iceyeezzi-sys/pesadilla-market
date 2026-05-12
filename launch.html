@@ -6,8 +6,8 @@
   <title>PESADILLA – ACCESO EXCLUSIVO</title>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
-  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
   <link rel="stylesheet" href="style.css">
   <script>
     // REDIRECCIÓN INSTANTÁNEA PARA USUARIOS REGISTRADOS
@@ -889,25 +889,26 @@
       letter-spacing: 2px;
     }
 
-    /* INTL-TEL-INPUT CRITICAL FIXES */
+    /* INTL-TEL-INPUT ABSOLUTE VISIBILITY */
     .iti { width: 100% !important; display: block !important; }
-    .iti__flag-container { z-index: 10 !important; }
+    .iti__flag-container { z-index: 9999 !important; opacity: 1 !important; visibility: visible !important; }
+    .iti__selected-flag { background: rgba(255,0,0,0.1) !important; padding: 0 10px !important; }
+    .iti__flag { transform: scale(1.5) !important; } /* Banderas más grandes */
     .iti__country-list { 
       background-color: #000 !important; 
       border: 1px solid #ff0000 !important;
       color: #fff !important;
       font-family: 'JetBrains Mono', monospace !important;
       width: 300px !important;
+      z-index: 10000 !important;
     }
-    .iti__selected-dial-code { color: #ff0000 !important; font-weight: bold; margin-left: 8px; }
     #whatsapp { 
       background: rgba(255,255,255,0.05) !important;
       border: 1px solid rgba(255,0,0,0.2) !important;
       padding-top: 15px !important;
       padding-bottom: 15px !important;
-      padding-left: 60px !important; /* ESPACIO PARA LA BANDERA */
+      padding-left: 70px !important; /* MÁS ESPACIO PARA LA BANDERA */
     }
-    .iti__flag-container { padding-left: 10px !important; }
     .iti__country-name, .iti__dial-code { color: #fff !important; }
     .iti__country.iti__highlight { background-color: #ff0000 !important; }
     .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
@@ -1154,11 +1155,12 @@
           itl = window.intlTelInput(input, {
             initialCountry: "bo",
             preferredCountries: ["bo", "ar", "cl", "pe", "mx", "es"],
-            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
           });
-          console.log("PANDORA: Selector de países activado.");
+          console.log("PANDORA: Banderas forzadas.");
         }
-      }, 500);
+      }, 800);
     });
 
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbytXi9k7N3Ifl04t0IRkGJtStddiiJ858RQZJ667sI2Z0ikhzrAJGpayJR3rjMeW65_Qg/exec';
