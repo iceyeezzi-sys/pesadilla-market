@@ -954,10 +954,28 @@
     </div>
     <div class="warning-text mb-12">[ ADVERTENCIA: LA_REALIDAD_ES_UNA_FALLA ]</div>
 
-    <!-- FORMULARIO DE ACCESO REMOVIDO A PETICIÓN DEL USUARIO -->
+    <section class="max-w-2xl mx-auto w-full reveal mt-8">
+      <div class="bg-white/5 p-10 md:p-16 border border-white/5 backdrop-blur-xl">
+        <h2 class="font-syne text-2xl mb-12 uppercase text-center tracking-[0.4em] font-black text-[var(--p-red)]">SOLICITUD DE ACCESO</h2>
+        <form id="launchForm" class="flex flex-col gap-8">
+        <div>
+          <label class="font-mono text-[8px] uppercase tracking-[0.3em] text-[var(--p-red)] mb-3 block">NOMBRE_COMPLETO</label>
+          <input type="text" id="userName" placeholder="P. ej. Yezit Yugar" class="w-full" required minlength="3" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
+        </div>
+        <div>
+          <label class="font-mono text-[8px] uppercase tracking-[0.3em] text-[var(--p-red)] mb-3 block">WHATSAPP_CONTACTO</label>
+          <input type="tel" id="whatsapp" class="w-full" required minlength="8" placeholder="Solo números" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <p class="text-[7px] font-mono text-red-600/60 mt-2 uppercase tracking-tighter leading-tight">
+            [ INFO_SISTEMA ]: Selector automático de código de área activado.
+          </p>
+        </div>
+        <button type="submit" class="btn-submit w-full mt-4">DESBLOQUEAR ACCESO_</button>
+        </form>
+      </div>
+    </section>
   </main>
 
-  <section id="sector-lanzamientos" class="pt-10 pb-40 px-6">
+  <section id="sector-lanzamientos" class="pt-10 pb-40 px-6 hidden">
     <div class="max-w-[1600px] mx-auto">
         <div class="flex flex-col md:flex-row justify-between items-end mb-32 gap-8">
           <h2 class="section-title-premium !mb-0">DROPS_EXCLUSIVOS</h2>
@@ -1234,7 +1252,7 @@
       btn.style.opacity = '0.5';
       btn.disabled = true;
 
-      const fullPhone = itl.getNumber(); 
+      const fullPhone = window.itl ? window.itl.getNumber() : phoneInput; 
 
       // 1. REGISTRO EN GOOGLE SHEETS (SIEMPRE ACTIVO)
       fetch(WEB_APP_URL, {
