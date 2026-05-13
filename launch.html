@@ -1159,23 +1159,15 @@
   <script src="assets/cursor.js"></script>
   <script>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const initWp = () => {
-        const whatsappInput = document.querySelector("#whatsapp");
-        if (whatsappInput && window.intlTelInput) {
-          window.itl = window.intlTelInput(whatsappInput, {
-            initialCountry: 'bo',
-            preferredCountries: ['bo', 'pe', 'cl', 'ar'],
-            utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
-          });
-          console.log("Pandora: WhatsApp flag initialized successfully.");
-        } else {
-          setTimeout(initWp, 200);
-        }
-      };
-      // Esperar a que el preloader desaparezca para inicializar
-      setTimeout(initWp, 1500); 
-    });
+    const whatsappInput = document.querySelector("#whatsapp");
+    if (whatsappInput) {
+      window.itl = window.intlTelInput(whatsappInput, {
+        initialCountry: 'bo',
+        preferredCountries: ['bo', 'pe', 'cl', 'ar'],
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
+      });
+      console.log("Pandora: WhatsApp flag initialized successfully.");
+    }
 
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbytXi9k7N3Ifl04t0IRkGJtStddiiJ858RQZJ667sI2Z0ikhzrAJGpayJR3rjMeW65_Qg/exec';
 
