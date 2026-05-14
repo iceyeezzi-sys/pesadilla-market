@@ -91,7 +91,15 @@
     @keyframes high-flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.1; } }
     .flicker-intense { animation: high-flicker 0.05s infinite; }
 
-    /* SUCCESS TERMINAL (NEON TV) */
+    .time-block { background: #000; border: 1px solid rgba(255,0,0,0.2); padding: 1rem; display: flex; flex-direction: column; align-items: center; min-width: 80px; box-shadow: 0 0 20px rgba(255,0,0,0.1); }
+    .time-num { font-family: 'Archivo Black'; font-size: 3rem; color: #fff; line-height: 1; transition: 0.2s; }
+    .time-label { font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--p-red); font-weight: 800; margin-top: 5px; }
+    .update-tick { animation: tick-glitch 0.3s ease; }
+    @keyframes tick-glitch { 
+      0% { transform: scale(1); opacity: 1; filter: blur(0); }
+      50% { transform: scale(1.1) skew(5deg); opacity: 0.5; filter: hue-rotate(90deg) blur(2px); }
+      100% { transform: scale(1); opacity: 1; filter: blur(0); }
+    }
     #success-terminal { position: fixed; inset: 0; background: #000; z-index: 1000005; display: none; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
     .terminal-content { width: 0%; height: 2px; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #0f0; box-shadow: 0 0 50px rgba(0,255,0,0.5); position: relative; }
     .terminal-ready .terminal-content { width: 90%; height: 80%; max-width: 800px; transition: width 0.4s ease, height 0.4s 0.4s ease; padding: 3rem; background: rgba(0,5,0,0.95); }
@@ -125,39 +133,36 @@
   <div class="grain"></div>
 
   <main class="min-h-screen flex flex-col justify-center items-center p-8 relative z-10">
-    <div class="text-center mb-10">
-      <div class="font-mono text-[8px] opacity-40 tracking-[1em] uppercase mb-4">ACCESS_PROTOCOL_v4.7</div>
-      
-    <div class="fixed top-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center">
-      <div class="flex gap-4 md:gap-8 mb-2">
-        <div class="flex flex-col items-center">
-          <span id="days" class="text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_15px_#f00]">00</span>
-          <span class="text-[8px] uppercase tracking-widest text-red-600 font-bold mt-1">Days</span>
+    <!-- MAIN LOGO -->
+    <div class="logo-main melted mb-6" id="logo-pesadilla">PESADILLA</div>
+
+    <!-- COUNTDOWN SECTION -->
+    <div class="flex flex-col items-center mb-10">
+      <div class="flex gap-2 md:gap-4 mb-2">
+        <div class="time-block">
+          <span id="days" class="time-num">00</span>
+          <span class="time-label">Days</span>
         </div>
-        <span class="text-4xl md:text-6xl font-black text-red-600">:</span>
-        <div class="flex flex-col items-center">
-          <span id="hours" class="text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_15px_#f00]">00</span>
-          <span class="text-[8px] uppercase tracking-widest text-red-600 font-bold mt-1">Hrs</span>
+        <span class="text-4xl font-black text-red-600 self-center">:</span>
+        <div class="time-block">
+          <span id="hours" class="time-num">00</span>
+          <span class="time-label">Hrs</span>
         </div>
-        <span class="text-4xl md:text-6xl font-black text-red-600">:</span>
-        <div class="flex flex-col items-center">
-          <span id="minutes" class="text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_15px_#f00]">00</span>
-          <span class="text-[8px] uppercase tracking-widest text-red-600 font-bold mt-1">Min</span>
+        <span class="text-4xl font-black text-red-600 self-center">:</span>
+        <div class="time-block">
+          <span id="minutes" class="time-num">00</span>
+          <span class="time-label">Min</span>
         </div>
-        <span class="text-4xl md:text-6xl font-black text-red-600">:</span>
-        <div class="flex flex-col items-center">
-          <span id="seconds" class="text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_15px_#f00]">00</span>
-          <span class="text-[8px] uppercase tracking-widest text-red-600 font-bold mt-1">Sec</span>
+        <span class="text-4xl font-black text-red-600 self-center">:</span>
+        <div class="time-block">
+          <span id="seconds" class="time-num">00</span>
+          <span class="time-label">Sec</span>
         </div>
       </div>
-      <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-50"></div>
-      <div class="text-[9px] text-red-500/50 uppercase tracking-[0.6em] mt-2">[ ADVERTENCIA: LA_REALIDAD_ES_UNA_FALLA ]</div>
+      <div class="text-[8px] text-red-500/40 uppercase tracking-[0.6em] mt-2">[ ADVERTENCIA: LA_REALIDAD_ES_UNA_FALLA ]</div>
     </div>
 
-    <div class="logo-main melted mb-8" id="logo-pesadilla">
-      PESADILLA
-    </div>
-
+    <!-- ACCESS CARD -->
     <div class="access-form-card" id="form-card">
       <h2 class="font-black text-center uppercase tracking-[0.4em] text-xs mb-10 text-white">Solicitud de Acceso</h2>
       <form id="launchForm" class="space-y-8">
@@ -474,15 +479,25 @@
         const now = new Date().getTime();
         const distance = targetDate - now;
 
-        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((distance % (1000 * 60)) / 1000);
+        const d = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        const s = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
 
-        document.getElementById("days").innerText = d.toString().padStart(2, '0');
-        document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-        document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-        document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+        const updateVal = (id, val) => {
+          const el = document.getElementById(id);
+          if (el.innerText !== val) {
+            el.innerText = val;
+            el.classList.remove('update-tick');
+            void el.offsetWidth; // Trigger reflow
+            el.classList.add('update-tick');
+          }
+        };
+
+        updateVal("days", d);
+        updateVal("hours", h);
+        updateVal("minutes", m);
+        updateVal("seconds", s);
       }
       setInterval(updateCountdown, 1000);
       updateCountdown();
