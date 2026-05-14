@@ -100,6 +100,10 @@
       50% { transform: scale(1.1) skew(5deg); opacity: 0.5; filter: hue-rotate(90deg) blur(2px); }
       100% { transform: scale(1); opacity: 1; filter: blur(0); }
     }
+    
+    /* FLOATING WINDOWS */
+    .glitch-window { position: absolute; background: #000; border: 1px solid #f00; z-index: 1000004; padding: 10px; box-shadow: 0 0 20px #f00; display: flex; align-items: center; justify-content: center; animation: window-jitter 0.05s infinite; }
+    .glitch-window img { max-width: 300px; height: auto; filter: invert(1); }
     #success-terminal { position: fixed; inset: 0; background: #000; z-index: 1000005; display: none; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
     .terminal-content { width: 0%; height: 2px; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #0f0; box-shadow: 0 0 50px rgba(0,255,0,0.5); position: relative; }
     .terminal-ready .terminal-content { width: 90%; height: 80%; max-width: 800px; transition: width 0.4s ease, height 0.4s 0.4s ease; padding: 3rem; background: rgba(0,5,0,0.95); }
@@ -370,7 +374,7 @@
             const win = document.createElement('div'); win.className = 'glitch-window';
             win.style.top = Math.random()*70+'%'; win.style.left = Math.random()*70+'%';
             win.style.zIndex = "10002";
-            win.innerHTML = `<img src="assets/main-logo.png" style="width:120px">`;
+            win.innerHTML = `<img src="assets/ROSTRO_DISTORSIONADO.png">`;
             document.getElementById('glitch-overlay-container').appendChild(win);
             setTimeout(() => win.remove(), 300);
           }
