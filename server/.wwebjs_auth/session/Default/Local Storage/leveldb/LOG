@@ -1,3 +1,12 @@
-2026/05/03-01:17:23.967 4a4 Reusing MANIFEST C:\Users\user\Desktop\claude-prueba\pesadilla-store\server\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
-2026/05/03-01:17:23.982 4a4 Recovering log #23
-2026/05/03-01:17:23.988 4a4 Reusing old log C:\Users\user\Desktop\claude-prueba\pesadilla-store\server\.wwebjs_auth\session\Default\Local Storage\leveldb/000023.log 
+2026/05/05-19:16:10.512 2324 Reusing MANIFEST C:\Users\user\Desktop\claude-prueba\pesadilla-store\server\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2026/05/05-19:16:10.523 2324 Recovering log #24
+2026/05/05-19:16:10.527 2324 Reusing old log C:\Users\user\Desktop\claude-prueba\pesadilla-store\server\.wwebjs_auth\session\Default\Local Storage\leveldb/000024.log 
+2026/05/05-19:36:18.884 50c Level-0 table #28: started
+2026/05/05-19:36:18.895 50c Level-0 table #28: 17122 bytes OK
+2026/05/05-19:36:18.900 50c Delete type=0 #24
+2026/05/05-21:15:09.748 2324 Level-0 table #30: started
+2026/05/05-21:15:09.759 2324 Level-0 table #30: 13895 bytes OK
+2026/05/05-21:15:09.764 2324 Delete type=0 #27
+2026/05/05-23:36:32.907 50c Level-0 table #32: started
+2026/05/05-23:36:33.300 50c Level-0 table #32: 16367 bytes OK
+2026/05/05-23:36:33.381 50c Delete type=0 #29

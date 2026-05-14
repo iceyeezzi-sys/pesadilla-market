@@ -158,6 +158,14 @@
     /* FIX PARA QUE LA BANDERA NO TAPE EL TEXTO Y SE PUEDA ESCRIBIR */
     .iti { width: 100%; }
     #distro-whatsapp { padding-left: 80px !important; }
+    .iti__country-list {
+      background: #0a0a0a !important;
+      border: 1px solid var(--p-red) !important;
+      color: #fff !important;
+      font-family: 'JetBrains Mono' !important;
+      font-size: 12px !important;
+      z-index: 300 !important;
+    }
 
     /* VIDEO DE FONDO */
     .video-bg { 
@@ -479,7 +487,11 @@
     });
 
     const distroPhone = document.getElementById('distro-whatsapp');
-    const itl = window.intlTelInput(distroPhone, { initialCountry: 'bo', utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js' });
+    window.itl = window.intlTelInput(distroPhone, { 
+      initialCountry: 'bo', 
+      preferredCountries: ['bo', 'pe', 'cl', 'ar'],
+      utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js' 
+    });
 
     document.getElementById('distroForm').addEventListener('submit', (e) => {
       e.preventDefault();

@@ -133,14 +133,18 @@ whatsapp.on('message', async (msg) => {
 
     if (msg.fromMe) return;
 
-    // RESPUESTA AUTOMÁTICA INICIAL (PRECIOS)
-    if (!firstResponseSent.has(msg.from)) {
-        firstResponseSent.add(msg.from); // MARCAR ANTES DE ENVIAR PARA EVITAR DUPLICADOS
-        await chat.sendMessage(MENU_INICIAL);
-        console.log(` >> PANDORA: MENÚ_INICIAL_ENVIADO A ${name}`);
-        return; 
+    // --- SOLICITUD DE CÓDIGO DE SINCRONIZACIÓN (ÚNICO AUTOMÁTICO) ---
+    if (msg.body.toUpperCase().startsWith('SOLICITO_CODIGO:')) {
+        const userName = msg.body.split(':')[1] || "Usuario";
+        const uniqueCode = Math.floor(1000 + Math.random() * 9000).toString();
+        activeSessions.set(chatId, uniqueCode);
+        
+        await msg.reply(`Hola, ${userName}. Soy Pandora. 🕸️\n\nTu código de acceso exclusivo es: *${uniqueCode}*\n\nIngrésalo en la terminal de sincronización para desbloquear el sistema.`);
+        console.log(`[ SEGURIDAD ] Código ${uniqueCode} generado para ${userName} (${chatId})`);
+        return;
     }
 
+    // --- LÓGICA EXISTENTE DE HITL / PANDORA ---
     // RESPUESTA DE PANDORA (IA para dudas posteriores)
     console.log(` >> PANDORA: PROCESANDO...`);
 
