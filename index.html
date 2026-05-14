@@ -134,7 +134,7 @@
 
   <main class="min-h-screen flex flex-col justify-center items-center p-8 relative z-10">
     <!-- MAIN LOGO -->
-    <div class="logo-main melted mb-6" id="logo-pesadilla">PESADILLA</div>
+    <div class="logo-main mb-6" id="logo-pesadilla">PESADILLA</div>
 
     <!-- COUNTDOWN SECTION -->
     <div class="flex flex-col items-center mb-10">
@@ -471,37 +471,46 @@
         }
       });
 
-      // COUNTDOWN LOGIC (7 DAYS)
-      const targetDate = new Date();
-      targetDate.setDate(targetDate.getDate() + 7);
-
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        const d = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-        const s = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-
-        const updateVal = (id, val) => {
-          const el = document.getElementById(id);
-          if (el.innerText !== val) {
-            el.innerText = val;
-            el.classList.remove('update-tick');
-            void el.offsetWidth; // Trigger reflow
-            el.classList.add('update-tick');
-          }
-        };
-
-        updateVal("days", d);
-        updateVal("hours", h);
-        updateVal("minutes", m);
-        updateVal("seconds", s);
-      }
-      setInterval(updateCountdown, 1000);
-      updateCountdown();
     }
+    
+    // COUNTDOWN LOGIC (7 DAYS PERSISTENT)
+    let targetDate = localStorage.getItem('pesadilla_deadline');
+    if (!targetDate) {
+      targetDate = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
+      localStorage.setItem('pesadilla_deadline', targetDate);
+    }
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        document.querySelector(".time-block").parentElement.innerHTML = "<span class='text-red-600 font-black uppercase tracking-widest'>Protocolo_Activo</span>";
+        return;
+      }
+
+      const d = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+      const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+      const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+      const s = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+
+      const updateVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && el.innerText !== val) {
+          el.innerText = val;
+          el.classList.remove('update-tick');
+          void el.offsetWidth;
+          el.classList.add('update-tick');
+        }
+      };
+
+      updateVal("days", d);
+      updateVal("hours", h);
+      updateVal("minutes", m);
+      updateVal("seconds", s);
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
 </body>
 </html>
