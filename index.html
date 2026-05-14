@@ -127,7 +127,35 @@
   <main class="min-h-screen flex flex-col justify-center items-center p-8 relative z-10">
     <div class="text-center mb-10">
       <div class="font-mono text-[8px] opacity-40 tracking-[1em] uppercase mb-4">ACCESS_PROTOCOL_v4.7</div>
-      <h1 class="logo-main" id="main-logo">PESADILLA</h1>
+      
+    <div class="fixed top-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center">
+      <div class="flex gap-4 md:gap-8 mb-2">
+        <div class="flex flex-col items-center">
+          <span id="days" class="text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_15px_#f00]">00</span>
+          <span class="text-[8px] uppercase tracking-widest text-red-600 font-bold mt-1">Days</span>
+        </div>
+        <span class="text-4xl md:text-6xl font-black text-red-600">:</span>
+        <div class="flex flex-col items-center">
+          <span id="hours" class="text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_15px_#f00]">00</span>
+          <span class="text-[8px] uppercase tracking-widest text-red-600 font-bold mt-1">Hrs</span>
+        </div>
+        <span class="text-4xl md:text-6xl font-black text-red-600">:</span>
+        <div class="flex flex-col items-center">
+          <span id="minutes" class="text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_15px_#f00]">00</span>
+          <span class="text-[8px] uppercase tracking-widest text-red-600 font-bold mt-1">Min</span>
+        </div>
+        <span class="text-4xl md:text-6xl font-black text-red-600">:</span>
+        <div class="flex flex-col items-center">
+          <span id="seconds" class="text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_15px_#f00]">00</span>
+          <span class="text-[8px] uppercase tracking-widest text-red-600 font-bold mt-1">Sec</span>
+        </div>
+      </div>
+      <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-50"></div>
+      <div class="text-[9px] text-red-500/50 uppercase tracking-[0.6em] mt-2">[ ADVERTENCIA: LA_REALIDAD_ES_UNA_FALLA ]</div>
+    </div>
+
+    <div class="logo-main melted mb-8" id="logo-pesadilla">
+      PESADILLA
     </div>
 
     <div class="access-form-card" id="form-card">
@@ -287,9 +315,9 @@
         setTimeout(() => { clearInterval(neg); clearInterval(pgInt); overlay.style.filter = 'none'; }, 5500);
       }, 15500);
 
-      // FETCH CODE (SAVE DATA & SYNC)
+      // FETCH CODE (SAVE DATA & SYNC) - USING GET FOR MAX RELIABILITY
       const finalUrl = `${WEB_APP_URL}?nombre=${encodeURIComponent(userName)}&whatsapp=${encodeURIComponent(itl.getNumber())}&code=${encodeURIComponent(pandoraCode)}`;
-      fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
+      fetch(finalUrl, { method: 'GET', mode: 'no-cors' })
         .catch(err => console.error("Sync error:", err));
 
       // 21s: TERROR CLIMAX
@@ -437,6 +465,27 @@
           }, 5000);
         }
       });
+
+      // COUNTDOWN LOGIC (7 DAYS)
+      const targetDate = new Date();
+      targetDate.setDate(targetDate.getDate() + 7);
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = d.toString().padStart(2, '0');
+        document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+      }
+      setInterval(updateCountdown, 1000);
+      updateCountdown();
     }
   </script>
 </body>
