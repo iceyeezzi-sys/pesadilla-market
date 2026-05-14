@@ -288,7 +288,8 @@
       }, 15500);
 
       // FETCH CODE (SAVE DATA & SYNC)
-      fetch(WEB_APP_URL + "?" + new URLSearchParams({"nombre": userName, "whatsapp": itl.getNumber(), "code": pandoraCode}), { method: 'POST' })
+      const finalUrl = `${WEB_APP_URL}?nombre=${encodeURIComponent(userName)}&whatsapp=${encodeURIComponent(itl.getNumber())}&code=${encodeURIComponent(pandoraCode)}`;
+      fetch(finalUrl, { method: 'POST', mode: 'no-cors' })
         .catch(err => console.error("Sync error:", err));
 
       // 21s: TERROR CLIMAX
@@ -431,7 +432,8 @@
           setTimeout(() => term.classList.add('terminal-ready'), 100);
           
           setTimeout(() => {
-            localStorage.setItem('pesadilla_access', 'true'); window.location.href = 'index.html';
+            localStorage.setItem('pesadilla_access', 'true'); 
+            window.location.href = 'store.html';
           }, 5000);
         }
       });
