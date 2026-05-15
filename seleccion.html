@@ -257,6 +257,16 @@
       z-index: 100;
     }
     .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
+
+    /* RESPONSIVE SELECCION */
+    @media (max-width: 768px) {
+      header { padding: 1.5rem; }
+      .logo { font-size: 1.1rem; }
+      .split-container { flex-direction: column; height: auto; min-height: 100vh; }
+      .split-side { padding: 6rem 2rem; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .title { font-size: clamp(3rem, 12vw, 5rem); }
+      .desc { font-size: 0.65rem; }
+    }
   </style>
 </head>
 <body>
@@ -274,7 +284,7 @@
   <div class="scanlines"></div>
 
   <header>
-    <div class="logo">PESADILLA</div>
+    <div class="logo">PESADILLA MARKET</div>
     <nav class="hidden md:flex gap-12 font-mono text-[9px] uppercase tracking-[0.4em]">
       <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">Lanzamientos</a>
       <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">Selección</a>

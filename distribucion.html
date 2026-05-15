@@ -195,6 +195,17 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .reveal { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* RESPONSIVE DISTRIBUCION */
+    @media (max-width: 768px) {
+      header { padding: 1.5rem; }
+      .logo { font-size: 1.1rem; }
+      .section-title { font-size: clamp(2.5rem, 15vw, 6rem); }
+      .distro-card { padding: 1.5rem; }
+      .distro-card h2 { font-size: 3rem; }
+      #cart-sidebar { width: 100%; padding: 2rem 1.5rem; }
+      .bg-white\/5.p-16 { padding: 2rem 1.5rem; }
+    }
   </style>
 </head>
 <body>
@@ -210,7 +221,7 @@
   </div>
 
   <header>
-    <div class="logo">PESADILLA</div>
+    <div class="logo">PESADILLA MARKET</div>
     <nav class="hidden md:flex gap-12 font-mono text-[9px] uppercase tracking-[0.4em]">
       <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">Lanzamientos</a>
       <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">Selección</a>

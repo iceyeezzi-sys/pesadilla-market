@@ -270,6 +270,20 @@
       opacity: 1;
       transform: translateX(0);
     }
+
+    /* RESPONSIVE DROPS */
+    @media (max-width: 768px) {
+      header { padding: 1rem 1.5rem; }
+      .logo { font-size: 1.1rem; }
+      .cart-tactical { gap: 5px; }
+      .inventory-badge { display: none; }
+      main { padding-top: 2rem; }
+      h1 { font-size: 3rem !important; }
+      .countdown-container { padding: 1rem; margin-bottom: 2rem; }
+      .countdown-numbers { font-size: 1.5rem; letter-spacing: 2px; }
+      .drop-card { padding: 1rem; }
+      .pandora-footer { padding: 1.5rem; font-size: 8px; }
+    }
   </style>
 </head>
 <body>
@@ -288,7 +302,7 @@
   <div class="scanlines"></div>
 
   <header>
-    <div class="logo">PESADILLA</div>
+    <div class="logo">PESADILLA MARKET</div>
     <nav class="hidden md:flex gap-10 font-mono text-[10px] uppercase tracking-[0.4em]">
       <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-all">Lanzamientos</a>
       <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-all">Selección</a>
