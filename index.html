@@ -103,13 +103,15 @@
     
     /* RESPONSIVE PORTAL */
     @media (max-width: 768px) {
-      .logo-main { font-size: 3.5rem !important; margin-bottom: 1.5rem; }
-      .time-block { min-width: 65px; padding: 0.6rem; }
-      .time-num { font-size: 1.8rem; }
-      .access-form-card { padding: 2.5rem 1.5rem; width: 95%; margin-top: 1rem; }
-      .access-form-card h2 { font-size: 9px; margin-bottom: 2rem; }
-      .btn-submit { padding: 1.2rem; font-size: 9px; }
+      .logo-main { font-size: 2.5rem !important; margin-bottom: 1rem; }
+      .time-block { min-width: 55px !important; padding: 0.4rem !important; }
+      .time-num { font-size: 1.4rem !important; }
+      .time-label { font-size: 6px !important; }
+      .access-form-card { padding: 2rem 1rem !important; width: 92% !important; margin-top: 0; }
+      .access-form-card h2 { font-size: 8px !important; margin-bottom: 1.5rem !important; }
+      .btn-submit { padding: 1rem 0 !important; font-size: 8px !important; letter-spacing: 0.2em !important; }
       #hacking-overlay .terminal-window { width: 95%; padding: 1rem; bottom: 20px; }
+      input { padding: 0.8rem !important; font-size: 10px !important; }
     }
     
     /* FLOATING WINDOWS */
@@ -147,28 +149,28 @@
   <div class="video-bg"><video autoplay loop muted playsinline><source src="assets/bg-video.mp4" type="video/mp4"></video></div>
   <div class="grain"></div>
 
-  <main class="min-h-screen flex flex-col justify-center items-center p-8 relative z-10">
+  <main class="min-h-screen flex flex-col justify-center items-center p-4 md:p-8 relative z-10">
     <!-- MAIN LOGO -->
     <div class="logo-main mb-6" id="logo-pesadilla">PESADILLA MARKET</div>
 
     <!-- COUNTDOWN SECTION -->
-    <div class="flex flex-col items-center mb-10">
-      <div class="flex gap-2 md:gap-4 mb-2">
+    <div class="flex flex-col items-center mb-8">
+      <div class="flex gap-1 md:gap-4 mb-2">
         <div class="time-block">
           <span id="days" class="time-num">00</span>
           <span class="time-label">DÍAS</span>
         </div>
-        <span class="text-4xl font-black text-red-600 self-center">:</span>
+        <span class="text-2xl md:text-4xl font-black text-red-600 self-center">:</span>
         <div class="time-block">
           <span id="hours" class="time-num">00</span>
           <span class="time-label">HORAS</span>
         </div>
-        <span class="text-4xl font-black text-red-600 self-center">:</span>
+        <span class="text-2xl md:text-4xl font-black text-red-600 self-center">:</span>
         <div class="time-block">
           <span id="minutes" class="time-num">00</span>
           <span class="time-label">MINUTOS</span>
         </div>
-        <span class="text-4xl font-black text-red-600 self-center">:</span>
+        <span class="text-2xl md:text-4xl font-black text-red-600 self-center">:</span>
         <div class="time-block">
           <span id="seconds" class="time-num">00</span>
           <span class="time-label">SEGUNDOS</span>
