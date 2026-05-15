@@ -91,11 +91,12 @@
     
     /* RESPONSIVE PORTAL - GRID FIX */
     @media (max-width: 768px) {
-      .logo-main { font-size: 12vw !important; margin-bottom: 1.5rem; letter-spacing: -1px; width: 100%; text-align: center; }
-      .countdown-grid { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 5px !important; width: 95% !important; max-width: 400px; }
+      .access-container { width: 92% !important; }
+      .logo-main { font-size: 14vw !important; margin-bottom: 1.5rem; letter-spacing: -1px; width: 100%; text-align: center; }
+      .countdown-grid { gap: 5px !important; }
       .time-num { font-size: 7vw !important; }
       .time-label { font-size: 1.8vw !important; }
-      .access-form-card { padding: 1.5rem 1rem !important; width: 92% !important; margin-top: 0; border-width: 1px; }
+      .access-form-card { padding: 1.5rem 1rem !important; border-width: 1px; }
       .btn-submit { padding: 1rem 0 !important; font-size: 3.5vw !important; letter-spacing: 0.1em !important; }
       input { padding: 0.6rem !important; font-size: 11px !important; }
     }
@@ -136,44 +137,49 @@
   <div class="grain"></div>
 
   <main class="min-h-screen flex flex-col justify-center items-center p-4 md:p-8 relative z-10">
-    <!-- MAIN LOGO -->
-    <div class="logo-main mb-6" id="logo-pesadilla">PESADILLA</div>
+    <!-- ACCESS CONTAINER (SYMMETRIC COLUMN) -->
+    <div class="access-container w-full max-w-[420px] flex flex-col items-center">
+      <!-- MAIN LOGO -->
+      <div class="logo-main mb-6 text-center" id="logo-pesadilla">PESADILLA</div>
 
-    <!-- COUNTDOWN SECTION -->
-    <div class="flex flex-col items-center mb-8 w-full">
-      <div class="countdown-grid flex gap-2 md:gap-4 mb-2">
+      <!-- COUNTDOWN SECTION -->
+      <div class="countdown-grid grid grid-cols-4 gap-3 mb-8 w-full">
         <div class="time-block">
           <span id="days" class="time-num">00</span>
           <span class="time-label">DÍAS</span>
         </div>
-        <span class="text-2xl md:text-4xl font-black text-red-600 self-center">:</span>
         <div class="time-block">
           <span id="hours" class="time-num">00</span>
           <span class="time-label">HORAS</span>
         </div>
-        <span class="text-2xl md:text-4xl font-black text-red-600 self-center">:</span>
         <div class="time-block">
           <span id="minutes" class="time-num">00</span>
-          <span class="time-label">MINUTOS</span>
+          <span class="time-label">MIN</span>
         </div>
-        <span class="text-2xl md:text-4xl font-black text-red-600 self-center">:</span>
         <div class="time-block">
           <span id="seconds" class="time-num">00</span>
-          <span class="time-label">SEGUNDOS</span>
+          <span class="time-label">SEG</span>
         </div>
       </div>
-      <div class="text-[8px] text-red-500/40 uppercase tracking-[0.6em] mt-4">[ ADVERTENCIA: LA_REALIDAD_ES_UNA_FALLA ]</div>
-    </div>
 
-    <!-- ACCESS CARD -->
-    <div class="access-form-card" id="form-card">
-      <h2 class="font-black text-center uppercase tracking-[0.4em] text-xs mb-10 text-white">Solicitud de Acceso</h2>
-      <form id="launchForm" class="space-y-8">
-        <div><label>NOMBRE_DEL_SUJETO</label><input type="text" id="userName" placeholder="INGRESA TU IDENTIDAD..." required minlength="3"></div>
-        <div><label>WHATSAPP_DE_CONTACTO</label><input type="tel" id="whatsapp" required></div>
-        <button type="submit" class="btn-submit">INICIAR_INFILTRACIÓN_</button>
-      </form>
-    </div>
+      <!-- ACCESS CARD -->
+      <div class="access-form-card w-full" id="form-card">
+        <h2 class="font-black text-center uppercase tracking-[0.4em] text-xs mb-10 text-white">Solicitud de Acceso</h2>
+        <form id="launchForm" class="space-y-8">
+          <div>
+            <label>NOMBRE_DEL_SUJETO</label>
+            <input type="text" id="userName" placeholder="INGRESA TU IDENTIDAD..." required minlength="3">
+          </div>
+          <div>
+            <label>WHATSAPP_DE_CONTACTO</label>
+            <input type="tel" id="whatsapp" required>
+          </div>
+          <button type="submit" class="btn-submit">INICIAR_INFILTRACIÓN_</button>
+        </form>
+      </div>
+      
+      <div class="text-[8px] text-red-500/40 uppercase tracking-[0.6em] mt-8 text-center">[ ADVERTENCIA: LA_REALIDAD_ES_UNA_FALLA ]</div>
+    </div> <!-- Close Access Container -->
   </main>
 
   <div id="hacking-overlay">
@@ -205,9 +211,12 @@
         <span class="text-green-600 font-bold text-[10px] tracking-widest">ACCESS_GRANTED_v7.2</span>
         <span id="term-date" class="text-white/20 font-mono text-[8px]"></span>
       </div>
-      <div class="metadata-line">USER_ID: <span id="term-user" class="text-white"></span></div>
-      <div class="metadata-line">IP_ADDR: <span id="term-ip" class="text-white"></span></div>
-      <div class="metadata-line">STATUS: <span class="text-green-500">AUTHORIZED</span></div>
+      
+      <div class="w-full space-y-2 mb-10">
+        <div class="metadata-line">USER_ID: <span id="term-user" class="text-white"></span></div>
+        <div class="metadata-line">IP_ADDR: <span id="term-ip" class="text-white"></span></div>
+        <div class="metadata-line">STATUS: <span class="text-green-500">AUTHORIZED</span></div>
+      </div>
       
       <div class="mt-20 text-center">
         <div class="text-5xl font-black italic text-white tracking-tighter mb-4" style="text-shadow: 0 0 30px #0f0;">BIENVENIDO A LA PESADILLA</div>
