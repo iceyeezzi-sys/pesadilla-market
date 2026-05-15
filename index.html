@@ -101,6 +101,17 @@
       100% { transform: scale(1); opacity: 1; filter: blur(0); }
     }
     
+    /* RESPONSIVE PORTAL */
+    @media (max-width: 768px) {
+      .logo-main { font-size: 3.5rem !important; margin-bottom: 1.5rem; }
+      .time-block { min-width: 65px; padding: 0.6rem; }
+      .time-num { font-size: 1.8rem; }
+      .access-form-card { padding: 2.5rem 1.5rem; width: 95%; margin-top: 1rem; }
+      .access-form-card h2 { font-size: 9px; margin-bottom: 2rem; }
+      .btn-submit { padding: 1.2rem; font-size: 9px; }
+      #hacking-overlay .terminal-window { width: 95%; padding: 1rem; bottom: 20px; }
+    }
+    
     /* FLOATING WINDOWS */
     .glitch-window { position: absolute; background: #000; border: 1px solid #f00; z-index: 1000004; padding: 10px; box-shadow: 0 0 20px #f00; display: flex; align-items: center; justify-content: center; animation: window-jitter 0.05s infinite; }
     .glitch-window img { max-width: 300px; height: auto; filter: invert(1); }
