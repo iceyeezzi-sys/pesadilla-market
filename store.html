@@ -152,6 +152,63 @@
       margin-bottom: 1rem;
       display: block;
     }
+
+    /* CART UI */
+    #cart-panel {
+      position: fixed;
+      right: -100%;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      background: rgba(0,0,0,0.98);
+      border-left: 1px solid var(--p-red);
+      z-index: 2000;
+      transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+    }
+    #cart-panel.active { right: 0; }
+    .cart-item {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-btn-float {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      width: 60px;
+      height: 60px;
+      background: var(--p-red);
+      color: white;
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      font-weight: 900;
+      box-shadow: 0 0 20px rgba(255,0,0,0.4);
+      transition: 0.3s;
+    }
+    .cart-btn-float:hover { transform: scale(1.1); background: white; color: black; }
+    .btn-add-to-cart {
+      width: 100%;
+      border: 1px solid var(--p-red);
+      color: var(--p-red);
+      padding: 1rem;
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: 0.3s;
+      margin-top: 1.5rem;
+    }
+    .btn-add-to-cart:hover { background: var(--p-red); color: white; }
+    .btn-added { background: #0f0 !important; color: #000 !important; border-color: #0f0 !important; }
   </style>
 </head>
 <body>
@@ -166,13 +223,15 @@
   </div>
 
   <header>
-    <div class="logo">PESADILLA</div>
+    <div class="logo">PESADILLA MARKET</div>
     <nav class="hidden md:flex gap-12 font-mono text-[9px] uppercase tracking-[0.4em]">
       <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">Lanzamientos</a>
       <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">Selección</a>
       <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-colors">Distribución</a>
     </nav>
-    <div class="text-xl">🛒</div>
+    <button onclick="toggleCart()" class="text-xl hover:scale-110 transition-transform relative">
+      🛒 <span id="cart-count-nav" class="absolute -top-2 -right-2 bg-red-600 text-[8px] px-1 rounded-full">0</span>
+    </button>
   </header>
 
   <main class="relative z-10">
@@ -209,7 +268,7 @@
           <div class="p-8 border-t border-white/5 relative">
             <h3 class="font-black text-[11px] uppercase tracking-wider product-name">Elite Drop OVERSIZE</h3>
             <p class="font-mono text-[9px] opacity-40 mt-2 tracking-widest uppercase">Algodón 20/1 Selecto</p>
-            <div class="flex justify-between items-center mt-4">
+            <div class="flex justify-between items-center mt-4 mb-6">
               <span class="text-[var(--p-red)] font-black text-sm">140.00 <span class="text-[9px]">BOB</span></span>
               <div class="relative group cursor-help">
                 <span class="font-mono text-[8px] text-white opacity-40 group-hover:opacity-100 transition-opacity">[VER_SPECS]</span>
@@ -221,6 +280,7 @@
                 </div>
               </div>
             </div>
+            <button class="btn-add-to-cart" onclick="addToCart('Elite Drop OVERSIZE', 140)">AÑADIR_AL_CARRITO_</button>
           </div>
         </div>
         <!-- P2 -->
@@ -236,7 +296,7 @@
           <div class="p-8 border-t border-white/5 relative">
             <h3 class="font-black text-[11px] uppercase tracking-wider product-name">BÁSICA DE 1ERA</h3>
             <p class="font-mono text-[9px] opacity-40 mt-2 tracking-widest uppercase">Algodón Selecto 20/1</p>
-            <div class="flex justify-between items-center mt-4">
+            <div class="flex justify-between items-center mt-4 mb-6">
               <span class="text-[var(--p-red)] font-black text-sm">135.00 <span class="text-[9px]">BOB</span></span>
               <div class="relative group cursor-help">
                 <span class="font-mono text-[8px] text-white opacity-40 group-hover:opacity-100 transition-opacity">[VER_SPECS]</span>
@@ -248,6 +308,7 @@
                 </div>
               </div>
             </div>
+            <button class="btn-add-to-cart" onclick="addToCart('BÁSICA DE 1ERA', 135)">AÑADIR_AL_CARRITO_</button>
           </div>
         </div>
         <!-- P3 -->
@@ -263,7 +324,7 @@
           <div class="p-8 border-t border-white/5 relative">
             <h3 class="font-black text-[11px] uppercase tracking-wider product-name">BÁSICA DE 2DA</h3>
             <p class="font-mono text-[9px] opacity-40 mt-2 tracking-widest uppercase">100% Algodón Standard</p>
-            <div class="flex justify-between items-center mt-4">
+            <div class="flex justify-between items-center mt-4 mb-6">
               <span class="text-[var(--p-red)] font-black text-sm">85.00 <span class="text-[9px]">BOB</span></span>
               <div class="relative group cursor-help">
                 <span class="font-mono text-[8px] text-white opacity-40 group-hover:opacity-100 transition-opacity">[VER_SPECS]</span>
@@ -275,6 +336,7 @@
                 </div>
               </div>
             </div>
+            <button class="btn-add-to-cart" onclick="addToCart('BÁSICA DE 2DA', 85)">AÑADIR_AL_CARRITO_</button>
           </div>
         </div>
         <!-- P4 -->
@@ -290,7 +352,7 @@
           <div class="p-8 border-t border-white/5 relative">
             <h3 class="font-black text-[11px] uppercase tracking-wider product-name">BÁSICA DE 3ERA</h3>
             <p class="font-mono text-[9px] opacity-40 mt-2 tracking-widest uppercase">Algodón Básico</p>
-            <div class="flex justify-between items-center mt-4">
+            <div class="flex justify-between items-center mt-4 mb-6">
               <span class="text-[var(--p-red)] font-black text-sm">50.00 <span class="text-[9px]">BOB</span></span>
               <div class="relative group cursor-help">
                 <span class="font-mono text-[8px] text-white opacity-40 group-hover:opacity-100 transition-opacity">[VER_SPECS]</span>
@@ -302,6 +364,7 @@
                 </div>
               </div>
             </div>
+            <button class="btn-add-to-cart" onclick="addToCart('BÁSICA DE 3ERA', 50)">AÑADIR_AL_CARRITO_</button>
           </div>
         </div>
       </div>
@@ -334,7 +397,7 @@
             <p class="font-mono text-[10px] opacity-40 mb-8 tracking-widest uppercase">Tecnología de proximidad • Pesadilla Identity</p>
             <div class="flex justify-between items-center">
               <span class="text-2xl font-black text-[var(--p-red)]">30.00 BOB</span>
-              <button class="border border-[var(--p-red)] px-8 py-3 text-[9px] font-black hover:bg-[var(--p-red)] hover:text-white transition-all btn-add-to-cart">COMPRAR_</button>
+              <button onclick="addToCart('LLAVERO NFC_v1', 30)" class="border border-[var(--p-red)] px-8 py-3 text-[9px] font-black hover:bg-[var(--p-red)] hover:text-white transition-all btn-add-to-cart">AÑADIR_AL_CARRITO_</button>
             </div>
           </div>
         </div>
@@ -351,7 +414,7 @@
             <p class="font-mono text-[10px] opacity-40 mb-8 tracking-widest uppercase">Aleación técnica • Acabado mate</p>
             <div class="flex justify-between items-center">
               <span class="text-2xl font-black text-[var(--p-red)]">12.50 BOB</span>
-              <button class="border border-[var(--p-red)] px-8 py-3 text-[9px] font-black hover:bg-[var(--p-red)] hover:text-white transition-all btn-add-to-cart">COMPRAR_</button>
+              <button onclick="addToCart('PIN GÓTICO_04', 12.5)" class="border border-[var(--p-red)] px-8 py-3 text-[9px] font-black hover:bg-[var(--p-red)] hover:text-white transition-all btn-add-to-cart">AÑADIR_AL_CARRITO_</button>
             </div>
           </div>
         </div>
@@ -387,7 +450,7 @@
             </p>
             <div class="flex justify-between items-center">
               <span class="text-3xl font-black text-[var(--p-red)]">350.00 BOB</span>
-              <button class="btn-main py-4 text-[9px] btn-add-to-cart">AÑADIR_</button>
+              <button onclick="addToCart('RETAIL PACK', 350)" class="btn-main py-4 text-[9px] btn-add-to-cart">AÑADIR_AL_CARRITO_</button>
             </div>
           </div>
         </div>
@@ -407,7 +470,7 @@
             </p>
             <div class="flex justify-between items-center">
               <span class="text-3xl font-black text-[var(--p-red)]">300.00 BOB</span>
-              <button class="btn-main py-4 text-[9px] btn-add-to-cart">AÑADIR_</button>
+              <button onclick="addToCart('DUAL PROTOCOL', 300)" class="btn-main py-4 text-[9px] btn-add-to-cart">AÑADIR_AL_CARRITO_</button>
             </div>
           </div>
         </div>
@@ -427,7 +490,7 @@
             </p>
             <div class="flex justify-between items-center">
               <span class="text-3xl font-black text-[var(--p-red)]">35.00 BOB</span>
-              <button class="btn-main py-4 text-[9px] btn-add-to-cart">IMPRIMIR_</button>
+              <button onclick="sendDTFRequest()" class="btn-main py-4 text-[9px]">SOLICITAR_IMPRESIÓN_</button>
             </div>
           </div>
         </div>
@@ -457,9 +520,31 @@
   </main>
 
   <footer class="py-20 text-center border-t border-white/5">
-    <div class="logo opacity-20 mb-8">PESADILLA</div>
+    <div class="logo opacity-20 mb-8">PESADILLA MARKET</div>
     <p class="font-mono text-[8px] tracking-[0.5em] opacity-30 italic">©2024 PESADILLA MARKET • ALL RIGHTS RESERVED</p>
   </footer>
+
+  <!-- CART PANEL -->
+  <div id="cart-panel">
+    <div class="flex justify-between items-center mb-12">
+      <h2 class="font-black italic text-xl uppercase tracking-tighter">TU_ORDEN</h2>
+      <button onclick="toggleCart()" class="text-white/40 hover:text-white transition-colors">[ CERRAR ]</button>
+    </div>
+    <div id="cart-items-list" class="flex-grow overflow-y-auto pr-2 custom-scrollbar">
+      <!-- ITEMS HERE -->
+    </div>
+    <div class="mt-8 border-t border-white/10 pt-8">
+      <div class="flex justify-between items-center mb-6">
+        <span class="font-mono text-[10px] opacity-40 uppercase tracking-widest">SUBTOTAL_MARKET</span>
+        <span id="cart-total" class="font-black text-xl text-[var(--p-red)]">0.00 BOB</span>
+      </div>
+      <button onclick="finalizeOrder()" class="btn-main w-full py-6 text-[10px] shadow-[0_0_30px_rgba(255,0,0,0.3)]">FINALIZAR_PEDIDO_VÍA_WHATSAPP</button>
+    </div>
+  </div>
+
+  <button onclick="toggleCart()" class="cart-btn-float">
+    <span id="cart-count-float">0</span>
+  </button>
 
   <script src="assets/cursor.js"></script>
   <script>
@@ -495,6 +580,89 @@
         }
       });
     });
+
+    // CART LOGIC
+    let cart = JSON.parse(localStorage.getItem('pesadilla_cart')) || [];
+    const WHATSAPP_NUMBER = "59178301540"; // PESADILLA MARKET HQ
+
+    function toggleCart() {
+      document.getElementById('cart-panel').classList.toggle('active');
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price, id: Date.now() });
+      localStorage.setItem('pesadilla_cart', JSON.stringify(cart));
+      updateCartUI();
+      
+      // Feedback Visual
+      const btn = event.currentTarget;
+      const originalText = btn.innerText;
+      btn.innerText = "AÑADIDO_✓";
+      btn.classList.add('btn-added');
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.classList.remove('btn-added');
+      }, 1500);
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      localStorage.setItem('pesadilla_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const list = document.getElementById('cart-items-list');
+      const totalEl = document.getElementById('cart-total');
+      const countNav = document.getElementById('cart-count-nav');
+      const countFloat = document.getElementById('cart-count-float');
+      
+      list.innerHTML = cart.length === 0 ? 
+        '<p class="font-mono text-[9px] opacity-20 text-center mt-20 tracking-widest uppercase">EL_CARRITO_ESTÁ_VACÍO</p>' : '';
+      
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <div>
+            <div class="font-black text-[10px] uppercase tracking-tighter">${item.name}</div>
+            <div class="text-[var(--p-red)] font-black text-[9px] mt-1">${item.price.toFixed(2)} BOB</div>
+          </div>
+          <button onclick="removeFromCart(${item.id})" class="text-[8px] text-white/20 hover:text-red-600 transition-colors uppercase">[ ELIMINAR ]</button>
+        `;
+        list.appendChild(div);
+      });
+      
+      totalEl.innerText = `${total.toFixed(2)} BOB`;
+      countNav.innerText = cart.length;
+      countFloat.innerText = cart.length;
+    }
+
+    function finalizeOrder() {
+      if(cart.length === 0) return alert("El carrito está vacío");
+      
+      let message = "Hola PESADILLA MARKET, quiero realizar el siguiente pedido:\n\n";
+      let total = 0;
+      cart.forEach((item, index) => {
+        message += `${index + 1}. ${item.name} - ${item.price.toFixed(2)} BOB\n`;
+        total += item.price;
+      });
+      message += `\nTOTAL_ORDEN: ${total.toFixed(2)} BOB\n\nQuedo a la espera de confirmación técnica.`;
+      
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    function sendDTFRequest() {
+      const message = "Hola PESADILLA MARKET, me interesa el SERVICIO DTF_PREMIUM. Te enviaré mi diseño por aquí para coordinar los detalles técnicos de impresión.\n\n[ID_PROTOCOLO: #DTF_SYNC]";
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    // Init UI
+    updateCartUI();
   </script>
 </body>
 </html>
