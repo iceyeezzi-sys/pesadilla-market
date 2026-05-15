@@ -196,6 +196,49 @@
     }
     .reveal { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
+    /* CART UI SYNC */
+    #cart-panel {
+      position: fixed;
+      right: -100%;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      background: rgba(0,0,0,0.98);
+      border-left: 1px solid var(--p-red);
+      z-index: 2000;
+      transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+    }
+    #cart-panel.active { right: 0; }
+    .cart-item {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-btn-float {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      width: 60px;
+      height: 60px;
+      background: var(--p-red);
+      color: white;
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      font-weight: 900;
+      box-shadow: 0 0 20px rgba(255,0,0,0.4);
+      transition: 0.3s;
+    }
+    .cart-btn-float:hover { transform: scale(1.1); background: white; color: black; }
+
     /* RESPONSIVE DISTRIBUCION */
     @media (max-width: 768px) {
       header { padding: 1.5rem; }
@@ -203,7 +246,7 @@
       .section-title { font-size: clamp(2.5rem, 15vw, 6rem); }
       .distro-card { padding: 1.5rem; }
       .distro-card h2 { font-size: 3rem; }
-      #cart-sidebar { width: 100%; padding: 2rem 1.5rem; }
+      #cart-panel { max-width: 100%; padding: 2rem 1.5rem; }
       .bg-white\/5.p-16 { padding: 2rem 1.5rem; }
     }
   </style>
@@ -420,24 +463,25 @@
     </section>
   </main>
 
-  <!-- CARRITO CONSOLA REPLICADO -->
-  <aside id="cart-sidebar" class="fixed top-0 right-0 w-[380px] h-full bg-black/98 backdrop-blur-2xl border-l border-[#ff0000]/20 p-10 z-[1000] transform translate-x-full transition-all duration-700 shadow-[-30px_0_60px_rgba(0,0,0,0.9)]">
-    <div class="flex flex-col h-full">
-      <div class="flex justify-between items-center mb-10 border-b border-white/5 pb-6">
-        <h2 class="text-[10px] font-black uppercase italic text-[var(--p-red)] tracking-[0.4em]">RESUMEN_PEDIDO</h2>
-        <button onclick="toggleCart()" class="text-2xl hover:text-white transition-colors">×</button>
+  <!-- CARRITO CONSOLA SINCRONIZADO -->
+  <aside id="cart-panel">
+    <div class="flex justify-between items-center mb-10 border-b border-white/5 pb-6">
+      <h2 class="text-[10px] font-black uppercase italic text-[var(--p-red)] tracking-[0.4em]">RESUMEN_PEDIDO</h2>
+      <button onclick="toggleCart()" class="text-2xl hover:text-white transition-colors">×</button>
+    </div>
+    <div id="cart-items-list" class="flex-grow overflow-y-auto space-y-6 pr-4 custom-scrollbar"></div>
+    <div class="border-t border-white/5 pt-10 mt-6">
+      <div class="flex justify-between font-bold mb-10 text-[10px] tracking-widest uppercase opacity-60">
+        <span>TOTAL_ESTIMADO:</span>
+        <span id="cart-total" class="text-[var(--p-red)] text-2xl font-black">0.00 BOB</span>
       </div>
-      <div id="cart-items-container" class="flex-grow overflow-y-auto space-y-6 pr-4 custom-scrollbar"></div>
-      <div class="border-t border-white/5 pt-10 mt-6">
-        <div class="flex justify-between font-bold mb-10 text-[10px] tracking-widest uppercase opacity-60">
-          <span>ESTIMADO TOTAL:</span>
-          <span id="cart-total-display" class="text-[var(--p-red)] text-2xl font-black">0.00 BOB</span>
-        </div>
-        <button id="checkout-btn" class="btn-premium disabled:opacity-20" disabled>PROCEDER AL PAGO_</button>
-      </div>
+      <button onclick="finalizeOrder()" class="btn-premium">PROCEDER AL PAGO_</button>
     </div>
   </aside>
-  <div id="cart-overlay" class="fixed inset-0 bg-black/80 z-[999] hidden backdrop-blur-md" onclick="toggleCart()"></div>
+
+  <button onclick="toggleCart()" class="cart-btn-float">
+    <span id="cart-count-float">0</span>
+  </button>
 
   <script src="assets/cursor.js"></script>
   <script>
@@ -526,26 +570,71 @@
       }, 1500);
     });
 
-    let cart = [];
-    const itemsContainer = document.getElementById('cart-items-container');
-    const totalDisplay = document.getElementById('cart-total-display');
-    const badge = document.getElementById('cart-count-badge');
-    const checkoutBtn = document.getElementById('checkout-btn');
+    let cart = JSON.parse(localStorage.getItem('pesadilla_cart')) || [];
+    const WHATSAPP_NUMBER = "59160390130"; // PESADILLA MARKET HQ
 
-    function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('translate-x-full'); document.getElementById('cart-overlay').classList.toggle('hidden'); }
-    function updateUI() {
-      itemsContainer.innerHTML = cart.length ? '' : '<p class="text-center opacity-20 mt-20 text-[9px] uppercase tracking-[0.5em] italic">Ningún item seleccionado</p>';
+    function toggleCart() {
+      document.getElementById('cart-panel').classList.toggle('active');
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price, id: Date.now() });
+      localStorage.setItem('pesadilla_cart', JSON.stringify(cart));
+      updateCartUI();
+      
+      toggleCart(); // Show cart on add for wholesale
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      localStorage.setItem('pesadilla_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const list = document.getElementById('cart-items-list');
+      const totalEl = document.getElementById('cart-total');
+      const countFloat = document.getElementById('cart-count-float');
+      
+      list.innerHTML = cart.length === 0 ? 
+        '<p class="font-mono text-[9px] opacity-20 text-center mt-20 tracking-widest uppercase">NINGÚN_ITEM_DETECTADO</p>' : '';
+      
       let total = 0;
-      cart.forEach(item => { 
+      cart.forEach(item => {
         total += item.price;
         const div = document.createElement('div');
-        div.className = 'flex justify-between items-center bg-white/5 p-5 border-l-2 border-[#ff0000] hover:bg-white/10 transition-colors';
-        div.innerHTML = `<div><p class="text-[10px] font-bold uppercase tracking-wider">${item.name}</p><p class="text-[10px] text-[#ff0000] font-black">${item.price.toFixed(2)} BOB</p></div><button onclick="removeItem(${item.id})" class="text-xl opacity-40 hover:opacity-100 transition-opacity">×</button>`;
-        itemsContainer.appendChild(div);
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <div>
+            <div class="font-black text-[10px] uppercase tracking-tighter">${item.name}</div>
+            <div class="text-[var(--p-red)] font-black text-[9px] mt-1">${item.price.toFixed(2)} BOB</div>
+          </div>
+          <button onclick="removeFromCart(${item.id})" class="text-[8px] text-white/20 hover:text-red-600 transition-colors uppercase">[ ELIMINAR ]</button>
+        `;
+        list.appendChild(div);
       });
-      totalDisplay.innerText = `${total.toFixed(2)} BOB`; badge.innerText = cart.length; checkoutBtn.disabled = !cart.length;
+      
+      totalEl.innerText = `${total.toFixed(2)} BOB`;
+      if(countFloat) countFloat.innerText = cart.length;
     }
-    function removeItem(id) { cart = cart.filter(item => item.id !== id); updateUI(); }
+
+    function finalizeOrder() {
+      if(cart.length === 0) return alert("El carrito está vacío");
+      
+      let message = "Hola PESADILLA MARKET, quiero cotizar el siguiente lote mayorista:\n\n";
+      let total = 0;
+      cart.forEach((item, index) => {
+        message += `${index + 1}. ${item.name} - ${item.price.toFixed(2)} BOB\n`;
+        total += item.price;
+      });
+      message += `\nTOTAL_ORDEN_ESTIMADO: ${total.toFixed(2)} BOB\n\nProtocolo de negocio activado.`;
+      
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    // Init UI
+    updateCartUI();
   </script>
 </body>
 </html>
