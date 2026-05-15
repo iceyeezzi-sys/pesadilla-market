@@ -260,12 +260,13 @@
 
     /* RESPONSIVE SELECCION */
     @media (max-width: 768px) {
-      header { padding: 1.5rem; }
+      header { padding: 1rem 1.5rem; }
       .logo { font-size: 1.1rem; }
       .split-container { flex-direction: column; height: auto; min-height: 100vh; }
-      .split-side { padding: 6rem 2rem; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
-      .title { font-size: clamp(3rem, 12vw, 5rem); }
-      .desc { font-size: 0.65rem; }
+      .split-side { padding: 4rem 1.5rem !important; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .title { font-size: 12vw !important; margin-bottom: 1rem !important; letter-spacing: -2px !important; }
+      .desc { font-size: 0.65rem; max-width: 280px; margin: 0 auto; }
+      .badge { margin-bottom: 1.5rem; font-size: 0.55rem; }
     }
   </style>
 </head>
@@ -317,6 +318,8 @@
     </a>
   </div>
 
+  <!-- LIBRARIES -->
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
   <script src="assets/cursor.js"></script>
   <script>
     const sides = document.querySelectorAll('.split-side');
@@ -344,12 +347,6 @@
       });
     });
 
-  </script>
-
-  <!-- LIBRARIES -->
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
-
-  <script>
     // SMOOTH SCROLL (LENIS)
     const lenis = new Lenis({
       duration: 1.2,
@@ -369,8 +366,6 @@
     }
     requestAnimationFrame(raf);
 
-  <script src="assets/cursor.js"></script>
-  <script>
     // PRELOADER LOGIC
     window.addEventListener('load', () => {
       const bar = document.getElementById('p-bar');
@@ -394,6 +389,8 @@
       }, 100);
     });
   </script>
+</body>
+</html>
 </body>
 </html>
 
