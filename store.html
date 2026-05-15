@@ -210,15 +210,35 @@
     .btn-add-to-cart:hover { background: var(--p-red); color: white; }
     .btn-added { background: #0f0 !important; color: #000 !important; border-color: #0f0 !important; }
 
-    /* RESPONSIVE STORE */
+       /* TACTICAL HEADER */
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+    .logo-full { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
+    .logo-mobile { display: none; font-family: 'Archivo Black'; font-size: 1.2rem; color: var(--p-red); }
+    .nav-links { display: flex; gap: 48px; font-family: 'JetBrains Mono'; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.4em; }
+
+    /* RESPONSIVE GRID */
     @media (max-width: 768px) {
-      header { padding: 1rem 1.5rem; }
-      .logo { font-size: 1.1rem; }
+      header { padding: 1.2rem 1rem !important; }
+      .logo-full { display: none; }
+      .logo-mobile { display: block; }
+      .nav-links { display: flex !important; gap: 8px !important; font-size: 7px !important; letter-spacing: 0.1em !important; opacity: 0.6; }
       .section-title { font-size: 14vw !important; letter-spacing: -2px; }
-      .product-card .p-8 { padding: 1.5rem; }
-      #cart-panel { max-width: 100%; padding: 2rem 1.5rem; }
-      .cart-btn-float { bottom: 20px; right: 20px; width: 50px; height: 50px; }
-      .btn-add-to-cart { font-size: 9px !important; padding: 1.1rem 0 !important; letter-spacing: 0.1em !important; }
+      #product-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+      .product-card .p-8 { padding: 1rem !important; }
+      .product-card h3 { font-size: 0.8rem !important; }
+      .product-card .price { font-size: 0.7rem !important; }
+      .btn-add-to-cart { font-size: 8px !important; padding: 0.8rem 0.2rem !important; letter-spacing: 0.05em !important; }
+      #cart-panel { max-width: 100%; padding: 1.5rem; }
+      .cart-btn-float { bottom: 15px; right: 15px; width: 45px; height: 45px; }
     }
   </style>
 </head>
@@ -227,23 +247,24 @@
   <div class="grain"></div>
   <div class="scanlines"></div>
 
+  <header>
+    <div class="logo-full">PESADILLA MARKET</div>
+    <div class="logo-mobile">P</div>
+    <nav class="nav-links">
+      <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">LANZ //</a>
+      <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">SEL //</a>
+      <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-colors">DIST</a>
+    </nav>
+    <div class="cart-btn-float bg-red-600 flex items-center justify-center cursor-pointer hover:bg-white hover:text-black transition-all" onclick="toggleCart()">
+      🛒
+    </div>
+  </header>
+
   <div class="video-bg">
     <video autoplay muted loop playsinline>
       <source src="assets/VIDEO_DE_FONDO.mp4" type="video/mp4">
     </video>
   </div>
-
-  <header>
-    <div class="logo">PESADILLA MARKET</div>
-    <nav class="hidden md:flex gap-12 font-mono text-[9px] uppercase tracking-[0.4em]">
-      <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">Lanzamientos</a>
-      <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">Selección</a>
-      <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-colors">Distribución</a>
-    </nav>
-    <button onclick="toggleCart()" class="text-xl hover:scale-110 transition-transform relative">
-      🛒 <span id="cart-count-nav" class="absolute -top-2 -right-2 bg-red-600 text-[8px] px-1 rounded-full">0</span>
-    </button>
-  </header>
 
   <main class="relative z-10">
     <!-- HERO -->

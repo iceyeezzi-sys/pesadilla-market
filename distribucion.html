@@ -178,6 +178,7 @@
     }
     .video-bg video { width: 100%; height: 100%; object-fit: cover; }
 
+    /* TACTICAL HEADER */
     header {
       position: absolute;
       top: 0;
@@ -188,67 +189,26 @@
       align-items: center;
       z-index: 100;
     }
-    .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .reveal { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-
-    /* CART UI SYNC */
-    #cart-panel {
-      position: fixed;
-      right: -100%;
-      top: 0;
-      width: 100%;
-      max-width: 400px;
-      height: 100vh;
-      background: rgba(0,0,0,0.98);
-      border-left: 1px solid var(--p-red);
-      z-index: 2000;
-      transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 3rem;
-      display: flex;
-      flex-direction: column;
-    }
-    #cart-panel.active { right: 0; }
-    .cart-item {
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      padding: 1.5rem 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .cart-btn-float {
-      position: fixed;
-      bottom: 40px;
-      right: 40px;
-      width: 60px;
-      height: 60px;
-      background: var(--p-red);
-      color: white;
-      border-radius: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      font-weight: 900;
-      box-shadow: 0 0 20px rgba(255,0,0,0.4);
-      transition: 0.3s;
-    }
-    .cart-btn-float:hover { transform: scale(1.1); background: white; color: black; }
+    .logo-full { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
+    .logo-mobile { display: none; font-family: 'Archivo Black'; font-size: 1.2rem; color: var(--p-red); }
+    .nav-links { display: flex; gap: 48px; font-family: 'JetBrains Mono'; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.4em; }
 
     /* RESPONSIVE DISTRIBUCION */
     @media (max-width: 768px) {
-      header { padding: 1rem 1.5rem; }
-      .logo { font-size: 1.1rem; }
-      .section-title { font-size: 12vw !important; }
-      .distro-card { padding: 1.5rem !important; }
-      .distro-card h2 { font-size: 2.2rem !important; }
-      #cart-panel { max-width: 100%; padding: 2rem 1.5rem; }
-      .bg-white\/5.p-16 { padding: 2rem 1.5rem; }
-      .btn-premium { font-size: 9px !important; padding: 1.1rem 0 !important; letter-spacing: 0.15em !important; }
+      header { padding: 1.2rem 1rem !important; }
+      .logo-full { display: none; }
+      .logo-mobile { display: block; }
+      .nav-links { display: flex !important; gap: 8px !important; font-size: 7px !important; letter-spacing: 0.1em !important; opacity: 0.6; }
+      .section-title { font-size: 14vw !important; letter-spacing: -2px; }
+      #distro-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+      .distro-card { padding: 1rem !important; }
+      .distro-card h2 { font-size: 1.6rem !important; }
+      #cart-panel { max-width: 100%; padding: 1.5rem; }
+      .bg-white\/5.p-16 { padding: 1.5rem !important; }
+      .btn-premium { font-size: 8px !important; padding: 0.8rem 0 !important; letter-spacing: 0.1em !important; }
+      .distro-card .p-8 { padding: 1rem !important; }
+      .distro-card p { display: none; }
+      .distro-card .space-y-4 { transform: scale(0.9); transform-origin: top left; }
     }
   </style>
 </head>
@@ -256,23 +216,6 @@
 
   <div class="grain"></div>
   <div class="scanlines"></div>
-
-  <!-- VIDEO DE FONDO -->
-  <div class="video-bg">
-    <video autoplay muted loop playsinline preload="auto" class="w-full h-full object-cover">
-      <source src="assets/VIDEO_DE_FONDO.mp4" type="video/mp4">
-    </video>
-  </div>
-
-  <header>
-    <div class="logo">PESADILLA MARKET</div>
-    <nav class="hidden md:flex gap-12 font-mono text-[9px] uppercase tracking-[0.4em]">
-      <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">Lanzamientos</a>
-      <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">Selección</a>
-      <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-colors">Distribución</a>
-    </nav>
-    <div class="text-xl">🛒</div>
-  </header>
 
   <main class="relative z-30 pt-48 pb-20 max-w-7xl mx-auto px-4">
     
@@ -322,7 +265,7 @@
     </div>
 
     <!-- PAQUETES BÁSICAS -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-32 reveal">
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-8 mb-32 reveal" id="distro-grid">
         <!-- BÁSICA DE 1ERA -->
         <div class="distro-card !p-0" data-id="distro-1era">
             <div class="product-image-container relative">

@@ -199,90 +199,36 @@
     }
 
 
-    header { padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
-    .logo { font-family: 'Archivo Black'; font-size: 1.8rem; letter-spacing: -2px; font-style: italic; }
-
-    /* CARRITO TÁCTICO */
-    .cart-tactical {
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: 0.3s;
-    }
-    .cart-icon-box {
-      width: 24px;
-      height: 24px;
-      border: 1px solid rgba(255,255,255,0.4);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.3s;
-    }
-    .cart-tactical:hover .cart-icon-box {
-      border-color: var(--p-red);
-      box-shadow: 0 0 10px var(--p-red);
-    }
-    .inventory-badge {
-      font-family: 'JetBrains Mono';
-      font-size: 8px;
-      color: var(--p-red);
-      letter-spacing: 1px;
-      animation: blink 1.5s infinite;
-    }
-    .cart-scan-line {
+    /* TACTICAL HEADER */
+    header {
       position: absolute;
       top: 0;
-      left: 0;
       width: 100%;
-      height: 1px;
-      background: var(--p-red);
-      box-shadow: 0 0 5px var(--p-red);
-      opacity: 0;
-      pointer-events: none;
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
     }
-    .cart-tactical:hover .cart-scan-line {
-      animation: cartScan 1s linear infinite;
-      opacity: 1;
-    }
-    @keyframes cartScan {
-      0% { top: 0%; }
-      100% { top: 100%; }
-    }
-    .cart-status-label {
-      position: absolute;
-      right: 110%;
-      background: #000;
-      border: 1px solid var(--p-red);
-      padding: 4px 8px;
-      font-family: 'JetBrains Mono';
-      font-size: 7px;
-      color: #fff;
-      white-space: nowrap;
-      opacity: 0;
-      transform: translateX(10px);
-      transition: 0.3s;
-      pointer-events: none;
-    }
-    .cart-tactical:hover .cart-status-label {
-      opacity: 1;
-      transform: translateX(0);
-    }
+    .logo-full { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
+    .logo-mobile { display: none; font-family: 'Archivo Black'; font-size: 1.2rem; color: var(--p-red); }
+    .nav-links { display: flex; gap: 48px; font-family: 'JetBrains Mono'; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.4em; }
 
     /* RESPONSIVE DROPS */
     @media (max-width: 768px) {
-      header { padding: 1rem 1.5rem; }
-      .logo { font-size: 1.1rem; }
-      .cart-tactical { gap: 5px; }
-      .inventory-badge { display: none; }
+      header { padding: 1.2rem 1rem !important; }
+      .logo-full { display: none; }
+      .logo-mobile { display: block; }
+      .nav-links { display: flex !important; gap: 8px !important; font-size: 7px !important; letter-spacing: 0.1em !important; opacity: 0.6; }
       main { padding-top: 2rem; }
-      h1 { font-size: 10vw !important; margin-bottom: 1.5rem !important; }
+      h1 { font-size: 12vw !important; margin-bottom: 1.5rem !important; }
       .countdown-container { padding: 1.5rem 1rem; margin-bottom: 2rem; }
-      .countdown-numbers { font-size: 1.5rem; letter-spacing: 2px; }
-      .drop-card { padding: 1.5rem !important; margin-bottom: 1rem; }
-      .drop-card button { font-size: 9px !important; padding: 1rem 0.5rem !important; letter-spacing: 0.1em !important; }
+      .countdown-numbers { font-size: 1.1rem !important; letter-spacing: 2px !important; }
+      #drops-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+      .drop-card { padding: 1rem !important; margin-bottom: 0 !important; }
+      .drop-card h3 { font-size: 0.8rem !important; }
+      .drop-card p { display: none; }
+      .drop-card button { font-size: 8px !important; padding: 0.8rem 0.2rem !important; letter-spacing: 0.05em !important; }
       .pandora-footer { padding: 1.5rem; font-size: 8px; }
     }
   </style>
@@ -291,6 +237,17 @@
 
   <div class="glitch-flash" id="flash-overlay"></div>
   
+  <header>
+    <div class="logo-full">PESADILLA MARKET</div>
+    <div class="logo-mobile">P</div>
+    <nav class="nav-links">
+      <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">LANZ //</a>
+      <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">SEL //</a>
+      <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-colors">DIST</a>
+    </nav>
+    <div class="text-xl">🛒</div>
+  </header>
+
   <!-- VIDEO DE FONDO -->
   <div class="video-bg">
     <video autoplay muted loop playsinline preload="auto">
@@ -301,28 +258,6 @@
   <div class="laser-line"></div>
   <div class="grain"></div>
   <div class="scanlines"></div>
-
-  <header>
-    <div class="logo">PESADILLA MARKET</div>
-    <nav class="hidden md:flex gap-10 font-mono text-[10px] uppercase tracking-[0.4em]">
-      <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-all">Lanzamientos</a>
-      <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-all">Selección</a>
-      <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-all">Distribución</a>
-    </nav>
-    
-    <!-- INVENTARIO TÁCTICO -->
-    <div class="cart-tactical">
-      <div class="cart-status-label">CHECKING_INVENTORY...</div>
-      <div class="inventory-badge">INV_LOAD: [0]</div>
-      <div class="cart-icon-box">
-        <div class="cart-scan-line"></div>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-        </svg>
-      </div>
-    </div>
-  </header>
 
   <main class="max-w-6xl mx-auto pt-12 px-6 relative z-10">
     <div class="text-center mb-16">
@@ -338,7 +273,7 @@
     </div>
 
     <!-- GRID -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-12" id="drops-grid">
       <!-- DROP 1 -->
       <div class="drop-card glass">
         <div class="aspect-[4/5] bg-neutral-900 relative overflow-hidden mb-6 border border-white/5">

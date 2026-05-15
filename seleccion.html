@@ -256,12 +256,16 @@
       align-items: center;
       z-index: 100;
     }
-    .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
+    .logo-full { font-weight: 900; font-size: 1.5rem; letter-spacing: -2px; font-style: italic; }
+    .logo-mobile { display: none; font-family: 'Archivo Black'; font-size: 1.2rem; color: var(--p-red); }
+    .nav-links { display: flex; gap: 48px; font-family: 'JetBrains Mono'; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.4em; }
 
     /* RESPONSIVE SELECCION */
     @media (max-width: 768px) {
-      header { padding: 1rem 1.5rem; }
-      .logo { font-size: 1.1rem; }
+      header { padding: 1.2rem 1rem !important; }
+      .logo-full { display: none; }
+      .logo-mobile { display: block; }
+      .nav-links { display: flex !important; gap: 8px !important; font-size: 7px !important; letter-spacing: 0.1em !important; opacity: 0.6; }
       .split-container { flex-direction: column; height: auto; min-height: 100vh; }
       .split-side { padding: 4rem 1.5rem !important; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
       .title { font-size: 12vw !important; margin-bottom: 1rem !important; letter-spacing: -2px !important; }
@@ -285,11 +289,12 @@
   <div class="scanlines"></div>
 
   <header>
-    <div class="logo">PESADILLA MARKET</div>
-    <nav class="hidden md:flex gap-12 font-mono text-[9px] uppercase tracking-[0.4em]">
-      <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">Lanzamientos</a>
-      <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">Selección</a>
-      <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-colors">Distribución</a>
+    <div class="logo-full">PESADILLA MARKET</div>
+    <div class="logo-mobile">P</div>
+    <nav class="nav-links">
+      <a href="proximos-drops.html" class="hover:text-[var(--p-red)] transition-colors">LANZ //</a>
+      <a href="seleccion.html" class="hover:text-[var(--p-red)] transition-colors">SEL //</a>
+      <a href="distribucion.html" class="hover:text-[var(--p-red)] transition-colors">DIST</a>
     </nav>
     <div class="text-xl">🛒</div>
   </header>
