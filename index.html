@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PESADILLA – PROTOCOLO_FINAL</title>
+  <title>PESADILLA MARKET – PROTOCOLO_FINAL</title>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
@@ -64,19 +64,7 @@
     .glitch-window img { width: 100px; height: auto; filter: invert(1); }
     @keyframes window-jitter { 0% { transform: translate(0,0); } 25% { transform: translate(10px, -10px); } 50% { transform: translate(-20px, 5px); } 75% { transform: translate(5px, 15px); } 100% { transform: translate(0,0); } }
 
-    #death-container { position: absolute; inset: 0; z-index: 5000; display: none; overflow: hidden; pointer-events: none; }
-    .death-line { position: absolute; left: 0; width: 100%; height: 2px; background: #fff; box-shadow: 0 0 30px #fff; opacity: 0.8; }
-    .death-line-thin { height: 1px; opacity: 0.4; }
-    
-    @keyframes line-flicker { 0%, 100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.2; transform: scaleY(3); } }
-    @keyframes screen-tear { 0% { clip-path: inset(0 0 0 0); } 20% { clip-path: inset(10% 0 85% 0); transform: translateX(10px); } 40% { clip-path: inset(80% 0 10% 0); transform: translateX(-10px); } 60% { clip-path: inset(30% 0 60% 0); transform: translateX(20px); } 80% { clip-path: inset(50% 0 40% 0); transform: translateX(-20px); } 100% { clip-path: inset(0 0 0 0); } }
-    @keyframes screen-shake { 0%, 100% { transform: translate(0,0); } 10%, 30%, 50%, 70%, 90% { transform: translate(-10px, 8px); } 20%, 40%, 60%, 80% { transform: translate(12px, -5px); } }
-    .glitch-tear { animation: screen-tear 0.1s infinite; }
-    .screen-shake { animation: screen-shake 0.1s infinite !important; }
-    #ghost-reveal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 5rem; font-family: 'Archivo Black'; color: #fff; text-align: center; display: none; z-index: 10000; filter: drop-shadow(0 0 30px #f00); }
-
-    #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 1000002; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-    .welcome-text { font-family: 'Syne'; font-weight: 900; font-size: 4rem; color: #fff; text-transform: uppercase; letter-spacing: 0.2em; filter: drop-shadow(0 0 50px #f00); animation: pulse-red 1.5s infinite; }
+    /* ACCESSS CARD ANIMATIONS */
     @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
     /* HORROR & CYBER EFFECTS (v6.0) */
@@ -110,9 +98,10 @@
       .time-label { font-size: 7px !important; }
       .access-form-card { padding: 1.5rem 1rem !important; width: 95% !important; margin-top: 0; border-width: 1px; }
       .access-form-card h2 { font-size: 8px !important; margin-bottom: 1.5rem !important; }
-      .btn-submit { padding: 1.2rem 0.5rem !important; font-size: 2.8vw !important; letter-spacing: 0.1em !important; white-space: nowrap; }
+      .btn-submit { padding: 1.2rem 0.5rem !important; font-size: 3vw !important; letter-spacing: 0.1em !important; white-space: nowrap; }
       input { padding: 0.7rem !important; font-size: 11px !important; }
       .logo-main { width: 100%; text-align: center; }
+      #hacking-overlay .terminal-window { width: 95%; padding: 1rem; bottom: 20px; }
     }
     
     /* FLOATING WINDOWS */
