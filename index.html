@@ -101,17 +101,18 @@
       100% { transform: scale(1); opacity: 1; filter: blur(0); }
     }
     
-    /* RESPONSIVE PORTAL */
+    /* RESPONSIVE PORTAL - EXTREME FIX */
     @media (max-width: 768px) {
-      .logo-main { font-size: 2.5rem !important; margin-bottom: 1rem; }
-      .time-block { min-width: 55px !important; padding: 0.4rem !important; }
-      .time-num { font-size: 1.4rem !important; }
-      .time-label { font-size: 6px !important; }
-      .access-form-card { padding: 2rem 1rem !important; width: 92% !important; margin-top: 0; }
+      .logo-main { font-size: 2.2rem !important; margin-bottom: 1.5rem; letter-spacing: -2px; }
+      .flex.gap-1.md-gap-4 { flex-wrap: wrap; justify-content: center; gap: 8px !important; }
+      .time-block { min-width: 45% !important; padding: 0.8rem !important; margin-bottom: 5px; }
+      .time-num { font-size: 1.8rem !important; }
+      .time-label { font-size: 7px !important; }
+      .access-form-card { padding: 1.5rem 1rem !important; width: 95% !important; margin-top: 0; border-width: 1px; }
       .access-form-card h2 { font-size: 8px !important; margin-bottom: 1.5rem !important; }
-      .btn-submit { padding: 1rem 0 !important; font-size: 8px !important; letter-spacing: 0.2em !important; }
-      #hacking-overlay .terminal-window { width: 95%; padding: 1rem; bottom: 20px; }
-      input { padding: 0.8rem !important; font-size: 10px !important; }
+      .btn-submit { padding: 1.2rem 0.5rem !important; font-size: 2.8vw !important; letter-spacing: 0.1em !important; white-space: nowrap; }
+      input { padding: 0.7rem !important; font-size: 11px !important; }
+      .logo-main { width: 100%; text-align: center; }
     }
     
     /* FLOATING WINDOWS */
