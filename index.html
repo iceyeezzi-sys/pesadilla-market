@@ -20,7 +20,7 @@
     :root { --p-green: #00ff41; --p-amber: #ffb100; --p-red: #ff0000; --p-white: #E8D8D8; }
     
     /* CURSOR INICIAL (CIRCULOS) - ASUMIENDO QUE cursor.js MANEJA ESTO */
-    body, html { background: #000 !important; color: var(--p-white); overflow: hidden; font-family: 'Syne', sans-serif; height: 100vh; }
+    body, html { background: #000 !important; color: var(--p-white); overflow-x: hidden; font-family: 'Syne', sans-serif; height: 100vh; width: 100vw; }
 
     /* CRT STARTUP */
     #crt-overlay { position: fixed; inset: 0; background: #000; z-index: 20000; display: flex; align-items: center; justify-content: center; }
@@ -79,9 +79,9 @@
     @keyframes high-flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.1; } }
     .flicker-intense { animation: high-flicker 0.05s infinite; }
 
-    .time-block { background: #000; border: 1px solid rgba(255,0,0,0.2); padding: 1rem; display: flex; flex-direction: column; align-items: center; min-width: 80px; box-shadow: 0 0 20px rgba(255,0,0,0.1); }
-    .time-num { font-family: 'Archivo Black'; font-size: 3rem; color: #fff; line-height: 1; transition: 0.2s; }
-    .time-label { font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--p-red); font-weight: 800; margin-top: 5px; }
+    .time-block { background: #000; border: 1px solid rgba(255,0,0,0.2); padding: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255,0,0,0.1); width: 100%; aspect-ratio: 1/1; }
+    .time-num { font-family: 'Archivo Black'; font-size: 8vw; color: #fff; line-height: 1; transition: 0.2s; }
+    .time-label { font-size: 1.5vw; text-transform: uppercase; letter-spacing: 1px; color: var(--p-red); font-weight: 800; margin-top: 2px; }
     .update-tick { animation: tick-glitch 0.3s ease; }
     @keyframes tick-glitch { 
       0% { transform: scale(1); opacity: 1; filter: blur(0); }
@@ -89,19 +89,15 @@
       100% { transform: scale(1); opacity: 1; filter: blur(0); }
     }
     
-    /* RESPONSIVE PORTAL - EXTREME FIX */
+    /* RESPONSIVE PORTAL - GRID FIX */
     @media (max-width: 768px) {
-      .logo-main { font-size: 2.2rem !important; margin-bottom: 1.5rem; letter-spacing: -2px; }
-      .flex.gap-1.md-gap-4 { flex-wrap: wrap; justify-content: center; gap: 8px !important; }
-      .time-block { min-width: 45% !important; padding: 0.8rem !important; margin-bottom: 5px; }
-      .time-num { font-size: 1.8rem !important; }
-      .time-label { font-size: 7px !important; }
-      .access-form-card { padding: 1.5rem 1rem !important; width: 95% !important; margin-top: 0; border-width: 1px; }
-      .access-form-card h2 { font-size: 8px !important; margin-bottom: 1.5rem !important; }
-      .btn-submit { padding: 1.2rem 0.5rem !important; font-size: 3vw !important; letter-spacing: 0.1em !important; white-space: nowrap; }
-      input { padding: 0.7rem !important; font-size: 11px !important; }
-      .logo-main { width: 100%; text-align: center; }
-      #hacking-overlay .terminal-window { width: 95%; padding: 1rem; bottom: 20px; }
+      .logo-main { font-size: 12vw !important; margin-bottom: 1.5rem; letter-spacing: -1px; width: 100%; text-align: center; }
+      .countdown-grid { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 5px !important; width: 95% !important; max-width: 400px; }
+      .time-num { font-size: 7vw !important; }
+      .time-label { font-size: 1.8vw !important; }
+      .access-form-card { padding: 1.5rem 1rem !important; width: 92% !important; margin-top: 0; border-width: 1px; }
+      .btn-submit { padding: 1rem 0 !important; font-size: 3.5vw !important; letter-spacing: 0.1em !important; }
+      input { padding: 0.6rem !important; font-size: 11px !important; }
     }
     
     /* FLOATING WINDOWS */
@@ -144,8 +140,8 @@
     <div class="logo-main mb-6" id="logo-pesadilla">PESADILLA MARKET</div>
 
     <!-- COUNTDOWN SECTION -->
-    <div class="flex flex-col items-center mb-8">
-      <div class="flex gap-1 md:gap-4 mb-2">
+    <div class="flex flex-col items-center mb-8 w-full">
+      <div class="countdown-grid flex gap-2 md:gap-4 mb-2">
         <div class="time-block">
           <span id="days" class="time-num">00</span>
           <span class="time-label">DÍAS</span>
@@ -166,7 +162,7 @@
           <span class="time-label">SEGUNDOS</span>
         </div>
       </div>
-      <div class="text-[8px] text-red-500/40 uppercase tracking-[0.6em] mt-2">[ ADVERTENCIA: LA_REALIDAD_ES_UNA_FALLA ]</div>
+      <div class="text-[8px] text-red-500/40 uppercase tracking-[0.6em] mt-4">[ ADVERTENCIA: LA_REALIDAD_ES_UNA_FALLA ]</div>
     </div>
 
     <!-- ACCESS CARD -->
