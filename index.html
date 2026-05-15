@@ -79,9 +79,9 @@
     @keyframes high-flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.1; } }
     .flicker-intense { animation: high-flicker 0.05s infinite; }
 
-    .time-block { background: #000; border: 1px solid rgba(255,0,0,0.2); padding: 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255,0,0,0.1); width: 100%; aspect-ratio: 1/1; }
-    .time-num { font-family: 'Archivo Black'; font-size: 8vw; color: #fff; line-height: 1; transition: 0.2s; }
-    .time-label { font-size: 1.5vw; text-transform: uppercase; letter-spacing: 1px; color: var(--p-red); font-weight: 800; margin-top: 2px; }
+    .time-block { background: #000; border: 1px solid rgba(255,0,0,0.2); padding: 0.8rem 0.2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255,0,0,0.1); width: 100%; min-height: 80px; }
+    .time-num { font-family: 'Archivo Black'; font-size: 2.2rem; color: #fff; line-height: 1; transition: 0.2s; letter-spacing: -2px; }
+    .time-label { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; color: var(--p-red); font-weight: 800; margin-top: 6px; }
     .update-tick { animation: tick-glitch 0.3s ease; }
     @keyframes tick-glitch { 
       0% { transform: scale(1); opacity: 1; filter: blur(0); }
@@ -91,14 +91,13 @@
     
     /* RESPONSIVE PORTAL - GRID FIX */
     @media (max-width: 768px) {
-      .access-container { width: 92% !important; }
-      .logo-main { font-size: 14vw !important; margin-bottom: 1.5rem; letter-spacing: -1px; width: 100%; text-align: center; }
-      .countdown-grid { gap: 5px !important; }
-      .time-num { font-size: 7vw !important; }
-      .time-label { font-size: 1.8vw !important; }
-      .access-form-card { padding: 1.5rem 1rem !important; border-width: 1px; }
-      .btn-submit { padding: 1rem 0 !important; font-size: 3.5vw !important; letter-spacing: 0.1em !important; }
-      input { padding: 0.6rem !important; font-size: 11px !important; }
+      .access-container { width: 95% !important; }
+      .logo-main { font-size: 3rem !important; margin-bottom: 1.5rem; letter-spacing: -2px; }
+      .countdown-grid { gap: 8px !important; }
+      .time-num { font-size: 1.8rem !important; }
+      .time-label { font-size: 7px !important; }
+      .access-form-card { padding: 2rem 1.5rem !important; }
+      .btn-submit { padding: 1.2rem 0 !important; font-size: 10px !important; }
     }
     
     /* FLOATING WINDOWS */
